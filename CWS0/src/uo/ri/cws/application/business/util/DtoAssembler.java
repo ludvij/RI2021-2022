@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.invoice.InvoicingWorkOrderDto;
+import uo.ri.cws.application.business.invoice.InvoiceDto.InvoiceStatus;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
@@ -45,13 +46,20 @@ public class DtoAssembler {
 		return result;
 	}
 	
+	
+	public static Optional<InvoiceDto> toInvoiceDto(Optional<InvoiceRecord> arg) {
+		Optional<InvoiceDto> result = arg.isEmpty()?Optional.ofNullable(null)
+				:Optional.ofNullable(toInvoiceDto(arg.get()));
+		return result;
+	}
 
 
-	public static InvoiceDto toDto(InvoiceRecord arg) {
+
+	private static InvoiceDto toInvoiceDto(InvoiceRecord arg) {
 		InvoiceDto result = new InvoiceDto();
 		result.id     = arg.id;
 		result.number = arg.number;
-		result.status = arg.status; //?
+		result.status = InvoiceStatus.valueOf(arg.status); //?
 		result.date   = arg.date;
 		result.total  = arg.amount;
 		result.vat    = arg.vat;
@@ -62,7 +70,7 @@ public class DtoAssembler {
 		InvoiceRecord result = new InvoiceRecord();
 		result.id     = arg.id;
 		result.number = arg.number;
-		result.status = arg.status; //?
+		result.status = arg.status+""; //?
 		result.date   = arg.date;
 		result.amount = arg.total;
 		result.vat    = arg.vat;

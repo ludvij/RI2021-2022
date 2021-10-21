@@ -1,7 +1,5 @@
 package uo.ri.cws.application.business.mechanic.crud.commands;
 
-import java.util.stream.Stream;
-
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.util.DtoAssembler;
@@ -25,7 +23,7 @@ public class UpdateMechanic implements Command<MechanicDto> {
 	
 	public MechanicDto execute() throws BusinessException {
 
-		if (!existMechanic(mechanic.dni))
+		if (!existMechanic(mechanic.id))
 			throw new BusinessException("Mechanic does not exists");
 		
 		MechanicRecord mr = DtoAssembler.toRecord(mechanic);
@@ -37,17 +35,17 @@ public class UpdateMechanic implements Command<MechanicDto> {
 	
 	private boolean isValidMechanic(MechanicDto mechanic)
 	{
-		return !Stream.of(mechanic,
-						  mechanic.dni, 
-						  mechanic.id, 
-						  mechanic.name, 
-						  mechanic.surname).anyMatch(x -> x == null);		
+		if (mechanic         == null)                               return false;
+		if (mechanic.dni     == null || mechanic.dni.isBlank())     return false;
+		if (mechanic.name    == null || mechanic.name.isBlank())    return false;
+		if (mechanic.surname == null || mechanic.surname.isBlank()) return false;
+		return true;	
 	}
 	
 	
-	private boolean existMechanic(String dni) 
+	private boolean existMechanic(String id) 
 	{
-		return mg.findByDni(dni).isPresent();
+		return mg.findById(id).isPresent();
 	}
 
 }

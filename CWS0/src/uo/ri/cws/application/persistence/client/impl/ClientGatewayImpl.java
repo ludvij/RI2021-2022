@@ -82,7 +82,7 @@ public class ClientGatewayImpl implements ClientGateway {
 		try {
 
 			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("TClients_findById"));
+					.prepareStatement(conf.getProperty("TClients_findByDni"));
 			
 			pst.setString(1, dni);
 			

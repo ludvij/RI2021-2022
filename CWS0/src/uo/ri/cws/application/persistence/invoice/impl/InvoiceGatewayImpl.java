@@ -23,7 +23,7 @@ public class InvoiceGatewayImpl implements InvoiceGateway {
 
 		try {
 			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("Tnvoices_add"));
+					.prepareStatement(conf.getProperty("TInvoices_add"));
 			
 			pst.setString(1, t.id);
 			pst.setLong(2,   t.number);

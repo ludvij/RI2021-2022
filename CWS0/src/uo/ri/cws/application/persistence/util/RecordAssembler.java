@@ -146,9 +146,9 @@ public class RecordAssembler {
 		record.email = rs.getString("email");
 		record.phone = rs.getString("phone");
 		
-		record.addressCity    = rs.getString("addressCity");
-		record.addressStreet  = rs.getString("addressStreet");
-		record.addressZipcode = rs.getString("addressZipcode");
+		record.addressCity    = rs.getString("city");
+		record.addressStreet  = rs.getString("street");
+		record.addressZipcode = rs.getString("zipcode");
 		
 		return record;
 	

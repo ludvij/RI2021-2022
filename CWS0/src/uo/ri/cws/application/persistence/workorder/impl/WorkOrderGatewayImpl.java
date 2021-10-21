@@ -80,7 +80,7 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 		ResultSet rs = null;
 		try {
 			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("TWorkOrders_findByMecanicDni"));
+					.prepareStatement(conf.getProperty("TWorkOrders_findByMechanicId"));
 
 			pst.setString(1, id);
 			
@@ -142,7 +142,7 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 		PreparedStatement pst = null;
 		try {
 			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("TWotkOrders_markAsInvoiced"));
+					.prepareStatement(conf.getProperty("TWorkOrders_markAsInvoiced"));
 
 			pst.setString(1, id);
 

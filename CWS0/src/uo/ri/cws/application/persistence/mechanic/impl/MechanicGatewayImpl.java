@@ -14,6 +14,8 @@ import uo.ri.cws.application.persistence.util.Conf;
 import uo.ri.cws.application.persistence.util.RecordAssembler;
 
 public class MechanicGatewayImpl implements MechanicGateway {
+	
+	private Conf conf = Conf.getInstance();
 
 	@Override
 	public void add(MechanicRecord t) {
@@ -21,9 +23,8 @@ public class MechanicGatewayImpl implements MechanicGateway {
 		PreparedStatement pst = null;
 
 		try {
-			String sql = Conf.getInstance().getProperty("TMechanics_add");
 			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(sql);
+					.prepareStatement(conf.getProperty("TMechanics_add"));
 			
 			pst.setString(1, t.id);
 			pst.setString(2, t.dni);

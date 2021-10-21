@@ -11,7 +11,7 @@ public class InvoiceDto {
 	public double vat;		// amount of vat (money)
 	public long number;		// the invoice identity, a sequential number
 	public LocalDate date;	// of the invoice
-	public String status;	// the status as in FacturaStatus
+	public InvoiceStatus status;	// the status as in FacturaStatus
 
 	public enum InvoiceStatus { NOT_YET_PAID, PAID }
 

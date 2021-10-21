@@ -9,6 +9,8 @@ import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.mechanic.crud.commands.AddMechanic;
 import uo.ri.cws.application.business.mechanic.crud.commands.DeleteMechanic;
 import uo.ri.cws.application.business.mechanic.crud.commands.FindAllMechanics;
+import uo.ri.cws.application.business.mechanic.crud.commands.FindMechanicByDni;
+import uo.ri.cws.application.business.mechanic.crud.commands.FindMechanicById;
 import uo.ri.cws.application.business.mechanic.crud.commands.UpdateMechanic;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
@@ -41,14 +43,12 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 
 	@Override
 	public Optional<MechanicDto> findMechanicById(String idMechanic) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return ce.execute(new FindMechanicById(idMechanic));
 	}
 
 	@Override
 	public Optional<MechanicDto> findMechanicByDni(String dniMechanic) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return ce.execute(new FindMechanicByDni(dniMechanic));
 	}
 
 	@Override

@@ -17,6 +17,8 @@ public class FindNotInvoicedWorkOrders implements Command<List<InvoicingWorkOrde
 	private String customerDni;
 	
 	public FindNotInvoicedWorkOrders(String customerDni) {
+		if (customerDni == null || customerDni.isBlank())
+			throw new IllegalArgumentException("invalid dni");
 		this.customerDni = customerDni;
 	}
 

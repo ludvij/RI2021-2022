@@ -26,6 +26,8 @@ public class CreateInvoice implements Command<InvoiceDto>{
 	private List<String> workOrderIds;
 
 	public CreateInvoice(List<String> workOrderIds) {
+		if (workOrderIds.stream().anyMatch(x -> x == null || x.isBlank()))
+			throw new IllegalArgumentException("invalid id");
 		this.workOrderIds = workOrderIds;
 	}
 	
@@ -45,7 +47,7 @@ public class CreateInvoice implements Command<InvoiceDto>{
 		invoice.vat    = vatPercentage(amount, invoice.date);
 		invoice.total = Round.twoCents(amount* (1 + invoice.vat/100)); // vat included
 		invoice.id = UUID.randomUUID().toString();
-		invoice.status = InvoiceStatus.NOT_YET_PAID.toString();
+		invoice.status = InvoiceStatus.NOT_YET_PAID;
 
 		createInvoice(invoice);
 		linkWorkordersToInvoice(invoice.id, workOrderIds);

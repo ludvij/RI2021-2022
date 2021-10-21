@@ -1,7 +1,6 @@
 package uo.ri.cws.application.business.mechanic.crud.commands;
 
 import java.util.UUID;
-import java.util.stream.Stream;
 
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
@@ -17,7 +16,7 @@ public class AddMechanic implements Command<MechanicDto> {
 	private MechanicGateway mg = PersistenceFactory.forMechanic();
 	
 	public AddMechanic(MechanicDto mechanic) {
-		if (isValidMechanic(mechanic))
+		if (!isValidMechanic(mechanic))
 			throw new IllegalArgumentException("invalid mechanic");
 		this.mechanic = mechanic;
 	}
@@ -38,11 +37,12 @@ public class AddMechanic implements Command<MechanicDto> {
 	
 	private boolean isValidMechanic(MechanicDto mechanic)
 	{
-		return !Stream.of(mechanic,
-						  mechanic.dni, 
-						  mechanic.id, 
-						  mechanic.name, 
-						  mechanic.surname).anyMatch(x -> x == null);		
+		if (mechanic == null) return false;
+		if (mechanic.dni == null || mechanic.dni.isBlank()) return false;
+		if (mechanic.name == null || mechanic.name.isBlank()) return false;
+		if (mechanic.surname == null || mechanic.surname.isBlank()) return false;
+		
+		return true;
 	}
 	
 	
