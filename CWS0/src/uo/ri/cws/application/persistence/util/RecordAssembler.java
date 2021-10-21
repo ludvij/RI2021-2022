@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import uo.ri.cws.application.persistence.client.ClientRecord;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
@@ -25,6 +26,15 @@ public class RecordAssembler {
 		List<MechanicRecord> res = new ArrayList<>();
 		while(rs.next()) {
 			res.add( resultSetToMechanicRecord(rs));
+		}
+
+		return res;
+	}
+	
+	public static List<ClientRecord> toClientRecordList(ResultSet rs) throws SQLException {
+		List<ClientRecord> res = new ArrayList<>();
+		while(rs.next()) {
+			res.add( resultSetToClientRecord(rs));
 		}
 
 		return res;
@@ -111,5 +121,36 @@ public class RecordAssembler {
 		return record;		
 	}
 	
-
+	
+	public static Optional<ClientRecord> toClientRecord ( ResultSet rs ) throws SQLException {
+		ClientRecord record = null;
+		
+		if (rs.next()) {
+			record = resultSetToClientRecord(rs);
+			}
+		return Optional.ofNullable(record);
+		
+	}
+	
+	
+	private static ClientRecord resultSetToClientRecord(ResultSet rs) throws SQLException {
+		ClientRecord record = new ClientRecord();
+		
+		record.id      = rs.getString("id");
+		record.version = rs.getLong("version");
+		
+		record.dni     = rs.getString("dni");
+		record.name    = rs.getString("name");
+		record.surname = rs.getString("surname");
+		
+		record.email = rs.getString("email");
+		record.phone = rs.getString("phone");
+		
+		record.addressCity    = rs.getString("addressCity");
+		record.addressStreet  = rs.getString("addressStreet");
+		record.addressZipcode = rs.getString("addressZipcode");
+		
+		return record;
+	
+	}
 }

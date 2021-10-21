@@ -40,7 +40,7 @@ public class DeleteMechanic implements Command<MechanicDto> {
 	
 	private boolean exists(String id)
 	{
-		return !mg.findById(id).isEmpty(); 
+		return mg.findById(id).isPresent(); 
 		
 	}
 	

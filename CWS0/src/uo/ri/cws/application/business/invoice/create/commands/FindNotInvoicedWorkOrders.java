@@ -7,6 +7,7 @@ import uo.ri.cws.application.business.invoice.InvoicingWorkOrderDto;
 import uo.ri.cws.application.business.util.DtoAssembler;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
+import uo.ri.cws.application.persistence.client.ClientGateway;
 import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
 
 public class FindNotInvoicedWorkOrders implements Command<List<InvoicingWorkOrderDto>> {
@@ -24,7 +25,7 @@ public class FindNotInvoicedWorkOrders implements Command<List<InvoicingWorkOrde
 	@Override
 	public List<InvoicingWorkOrderDto> execute() throws BusinessException 
 	{
-		if (!clientExists())
+		if (!clientExists(customerDni))
 			throw new BusinessException("Client does not exist");
 		var records = wog.findNotInvoiced(customerDni);
 		
@@ -32,10 +33,10 @@ public class FindNotInvoicedWorkOrders implements Command<List<InvoicingWorkOrde
 	}
 	
 	
-	private boolean clientExists() 
+	private boolean clientExists(String dni) 
 	{
-		// TODO
-		return true;
+		ClientGateway cg = PersistenceFactory.forClient();
+		return cg.findByDni(dni).isPresent();
 	}
 	
 }

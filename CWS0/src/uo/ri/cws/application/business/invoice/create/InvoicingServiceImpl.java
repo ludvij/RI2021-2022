@@ -18,6 +18,12 @@ public class InvoicingServiceImpl implements InvoicingService {
 
 	@Override
 	public InvoiceDto createInvoiceFor(List<String> workOrderIds) throws BusinessException {
+		if (workOrderIds == null)
+			throw new IllegalArgumentException("invalid ids");
+		if (workOrderIds.isEmpty())
+			throw new IllegalArgumentException("list is empty");
+		if (workOrderIds.stream().anyMatch(x -> x == null || x.isEmpty()))
+			throw new IllegalArgumentException("workorder id is null or empty");
 		return ce.execute(new CreateInvoice(workOrderIds));
 	}
 

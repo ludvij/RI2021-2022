@@ -19,17 +19,22 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 	
 	@Override
 	public MechanicDto addMechanic(MechanicDto mechanic) throws BusinessException {
-	
+		if (mechanic == null)
+			throw new IllegalArgumentException("invalid mechanic");
 		return ce.execute(new AddMechanic(mechanic));
 	}
 
 	@Override
 	public void deleteMechanic(String idMechanic) throws BusinessException {
+		if (idMechanic == null || idMechanic.isBlank())
+			throw new IllegalArgumentException("Invalid id");
 		ce.execute(new DeleteMechanic(idMechanic));	
 	}
 
 	@Override
 	public void updateMechanic(MechanicDto mechanic) throws BusinessException {
+		if (mechanic == null)
+			throw new IllegalArgumentException("invalid mechanic");
 		ce.execute(new UpdateMechanic(mechanic));	
 		
 	}

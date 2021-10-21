@@ -47,7 +47,7 @@ public class UpdateMechanic implements Command<MechanicDto> {
 	
 	private boolean existMechanic(String dni) 
 	{
-		return !mg.findByDni(dni).isEmpty();
+		return mg.findByDni(dni).isPresent();
 	}
 
 }
