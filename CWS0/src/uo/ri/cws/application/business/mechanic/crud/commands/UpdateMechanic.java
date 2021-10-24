@@ -1,5 +1,6 @@
 package uo.ri.cws.application.business.mechanic.crud.commands;
 
+import alb.util.assertion.Argument;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.util.DtoAssembler;
@@ -16,8 +17,8 @@ public class UpdateMechanic implements Command<MechanicDto> {
 	
 	
 	public UpdateMechanic(MechanicDto mechanic) {
-		if (!isValidMechanic(mechanic))
-			throw new IllegalArgumentException("Invalid mechanic");
+		isValidMechanic(mechanic);
+		
 		this.mechanic = mechanic;
 	}
 	
@@ -33,15 +34,17 @@ public class UpdateMechanic implements Command<MechanicDto> {
 	}
 	
 	
-	private boolean isValidMechanic(MechanicDto mechanic)
+	private void isValidMechanic(MechanicDto mechanic)
 	{
-		if (mechanic         == null)                               return false;
-		if (mechanic.dni     == null || mechanic.dni.isBlank())     return false;
-		if (mechanic.name    == null || mechanic.name.isBlank())    return false;
-		if (mechanic.surname == null || mechanic.surname.isBlank()) return false;
-		return true;	
+		Argument.isNotNull(mechanic,         "mechanic is null");
+		Argument.isNotNull(mechanic.dni,     "mechanic.name is null");
+		Argument.isNotNull(mechanic.name,    "mechanic.name is null");
+		Argument.isNotNull(mechanic.surname, "mechanic.surname is null");
+		
+		Argument.isNotEmpty(mechanic.dni,     "mechanic.dni is empty");
+		Argument.isNotEmpty(mechanic.name,    "mechanic.name is empty");
+		Argument.isNotEmpty(mechanic.surname, "mechanic.surname is empty");
 	}
-	
 	
 	private boolean existMechanic(String id) 
 	{

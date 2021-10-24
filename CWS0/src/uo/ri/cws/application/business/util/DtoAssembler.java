@@ -8,8 +8,10 @@ import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.invoice.InvoicingWorkOrderDto;
 import uo.ri.cws.application.business.invoice.InvoiceDto.InvoiceStatus;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
+import uo.ri.cws.application.business.paymentmean.voucher.VoucherDto;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
+import uo.ri.cws.application.persistence.paymentMean.voucher.VoucherRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
 public class DtoAssembler {
@@ -94,6 +96,27 @@ public class DtoAssembler {
 		dto.date        = record.date;
 		dto.status      = record.status;
 		dto.total       = record.amount;
+		
+		return dto;
+	}
+
+	public static List<VoucherDto> toVoucherDtoList(List<VoucherRecord> records) {
+		List<VoucherDto> res = new ArrayList<>();
+		for (var record : records)
+			res.add(toDto(record));
+		return res;
+	}
+
+	private static VoucherDto toDto(VoucherRecord record) {
+		VoucherDto dto = new VoucherDto();
+		
+		dto.accumulated = record.accumulated;
+		dto.balance     = record.balance;
+		dto.clientId    = record.clientId;
+		dto.code        = record.code;
+		dto.description = record.description;
+		dto.id          = record.id;
+		dto.version     = record.version;
 		
 		return dto;
 	}

@@ -4,6 +4,8 @@ import uo.ri.cws.application.business.invoice.InvoicingService;
 import uo.ri.cws.application.business.invoice.create.InvoicingServiceImpl;
 import uo.ri.cws.application.business.mechanic.MechanicCrudService;
 import uo.ri.cws.application.business.mechanic.crud.MechanicCrudServiceImpl;
+import uo.ri.cws.application.business.paymentmean.voucher.VoucherService;
+import uo.ri.cws.application.business.paymentmean.voucher.impl.VoucherServiceImpl;
 
 public class BusinessFactory {
 
@@ -21,9 +23,9 @@ public class BusinessFactory {
 //		return new PaymentmeanCrudServiceImpl();
 //	}
 	
-//	public static VoucherService forVoucherService() {
-//		return new VoucherServiceImpl();
-//	}
+	public static VoucherService forVoucherService() {
+		return new VoucherServiceImpl();
+	}
 
 //	public static ClientCrudService forClientCrudService() {
 //		return new ClientCrudServiceImpl();

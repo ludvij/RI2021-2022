@@ -9,6 +9,7 @@ import java.util.Optional;
 import uo.ri.cws.application.persistence.client.ClientRecord;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
+import uo.ri.cws.application.persistence.paymentMean.voucher.VoucherRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
 public class RecordAssembler {
@@ -152,5 +153,30 @@ public class RecordAssembler {
 		
 		return record;
 	
+	}
+
+
+	public static List<VoucherRecord> toVoucherRecordList(ResultSet rs) throws SQLException {
+		List<VoucherRecord> res = new ArrayList<>();
+		while(rs.next()) {
+			res.add( resultSetToVoucherRecord(rs)	);
+		}
+		
+		return res;
+	}
+
+
+	private static VoucherRecord resultSetToVoucherRecord(ResultSet rs) throws SQLException {
+		VoucherRecord record = new VoucherRecord();
+		record.id          = rs.getString("id");
+		record.version     = rs.getLong("version");
+		
+		record.accumulated = rs.getDouble("accumulated");
+		record.clientId    = rs.getString("client_Id");
+		
+		record.balance     = rs.getDouble("balance");
+		record.code        = rs.getString("code");
+		record.description = rs.getString("description");
+		return record;
 	}
 }

@@ -1,5 +1,6 @@
 package uo.ri.cws.application.business.mechanic.crud.commands;
 
+import alb.util.assertion.Argument;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.util.command.Command;
@@ -14,8 +15,7 @@ public class DeleteMechanic implements Command<MechanicDto> {
 	
 	
 	public DeleteMechanic(String id) {
-		if (id == null)
-			throw new IllegalArgumentException("invalid id");
+		Argument.isNotNull(id, "mechanic.id is null");
 		this.id = id;
 	}
 	

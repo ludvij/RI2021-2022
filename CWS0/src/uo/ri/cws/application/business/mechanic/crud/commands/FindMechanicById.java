@@ -2,6 +2,7 @@ package uo.ri.cws.application.business.mechanic.crud.commands;
 
 import java.util.Optional;
 
+import alb.util.assertion.Argument;
 import uo.ri.cws.application.business.BusinessException;
 import uo.ri.cws.application.business.mechanic.MechanicDto;
 import uo.ri.cws.application.business.util.DtoAssembler;
@@ -16,8 +17,9 @@ public class FindMechanicById implements Command<Optional<MechanicDto>> {
 	private MechanicGateway mg = PersistenceFactory.forMechanic();
 	
 	public FindMechanicById(String id) {
-		if (id == null || id.isBlank())
-			throw new IllegalArgumentException("invalid id");
+		Argument.isNotNull(id, "mechanic.id is null");
+		Argument.isNotEmpty(id, "mechanic.id is empty");
+		
 		this.id = id;
 	}
 

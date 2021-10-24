@@ -6,6 +6,8 @@ import uo.ri.cws.application.persistence.invoice.InvoiceGateway;
 import uo.ri.cws.application.persistence.invoice.impl.InvoiceGatewayImpl;
 import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
 import uo.ri.cws.application.persistence.mechanic.impl.MechanicGatewayImpl;
+import uo.ri.cws.application.persistence.paymentMean.voucher.VoucherGateway;
+import uo.ri.cws.application.persistence.paymentMean.voucher.impl.VoucherGatewayImpl;
 import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
 import uo.ri.cws.application.persistence.workorder.impl.WorkOrderGatewayImpl;
 
@@ -48,10 +50,10 @@ public class PersistenceFactory {
 //	public static ChargeGateway forCharge() {
 //		return new ChargeGatewayImpl();
 //	}
-//
-//	public static VoucherGateway forVoucher() {
-//		return new VoucherGatewayImpl();
-//	}
+
+	public static VoucherGateway forVoucher() {
+		return new VoucherGatewayImpl();
+	}
 //
 //	public static RecommendationGateway forRecommendation() {
 //		return new RecommendationGatewayImpl();
