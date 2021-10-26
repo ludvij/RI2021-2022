@@ -1,11 +1,13 @@
-package uo.ri.cws.application.persistence.paymentMean;
+package uo.ri.cws.application.persistence.paymentmean;
 
-public class PaymentMeanRecord {
+public class PaymentmeanRecord {
 	
 	public String id;
 	public Long version;
+	
+	public String dtype;
 
-	public String clientId;
+	public String client_id;
 	public Double accumulated;
 
 }

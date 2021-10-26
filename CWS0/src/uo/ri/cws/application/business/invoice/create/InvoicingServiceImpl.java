@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import uo.ri.cws.application.business.BusinessException;
+import uo.ri.cws.application.business.invoice.ChargeDto;
 import uo.ri.cws.application.business.invoice.InvoiceDto;
 import uo.ri.cws.application.business.invoice.InvoicingService;
 import uo.ri.cws.application.business.invoice.InvoicingWorkOrderDto;
@@ -54,6 +55,12 @@ public class InvoicingServiceImpl implements InvoicingService {
 	public List<PaymentMeanForInvoicingDto> findPayMeansByClientDni(String dni) throws BusinessException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void settleInvoice(String invoiceId, List<ChargeDto> charges) throws BusinessException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

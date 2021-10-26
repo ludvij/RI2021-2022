@@ -104,8 +104,8 @@ public interface InvoicingService {
 	 * 		method to PaymentMean class and the proper specialization on the
 	 * 		child classes
 	 */
-//	void settleInvoice(String invoiceId, List<ChargeDto> charges)
-//			throws BusinessException;
+	void settleInvoice(String invoiceId, List<ChargeDto> charges)
+			throws BusinessException;
 	
 	
 }

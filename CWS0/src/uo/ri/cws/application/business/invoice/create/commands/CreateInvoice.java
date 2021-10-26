@@ -47,7 +47,7 @@ public class CreateInvoice implements Command<InvoiceDto>{
 		invoice.vat    = vatPercentage(amount, invoice.date);
 		invoice.total = Round.twoCents(amount* (1 + invoice.vat/100)); // vat included
 		invoice.id = UUID.randomUUID().toString();
-		invoice.status = InvoiceStatus.NOT_YET_PAID;
+		invoice.status = String.valueOf(InvoiceStatus.NOT_YET_PAID);
 
 		createInvoice(invoice);
 		linkWorkordersToInvoice(invoice.id, workOrderIds);

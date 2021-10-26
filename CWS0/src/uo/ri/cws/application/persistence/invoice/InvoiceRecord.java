@@ -13,7 +13,7 @@ public class InvoiceRecord {
 	public long number;		// the invoice identity, a sequential number
 	public LocalDate date;		// of the invoice
 	public String status;	// the status as in FacturaStatus
-	// public boolean usedForVoucher;   // For loyalty program // deletion asked in erratum
+	public boolean usedforvoucher;   // For loyalty program // deletion asked in erratum
 
 
 }

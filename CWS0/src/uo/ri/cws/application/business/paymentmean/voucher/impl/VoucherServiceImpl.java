@@ -8,6 +8,7 @@ import uo.ri.cws.application.business.paymentmean.voucher.VoucherDto;
 import uo.ri.cws.application.business.paymentmean.voucher.VoucherService;
 import uo.ri.cws.application.business.paymentmean.voucher.VoucherSummaryDto;
 import uo.ri.cws.application.business.paymentmean.voucher.impl.commands.FindVouchersByClientId;
+import uo.ri.cws.application.business.paymentmean.voucher.impl.commands.GetvoucherSummary;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
 public class VoucherServiceImpl implements VoucherService {
@@ -33,8 +34,7 @@ public class VoucherServiceImpl implements VoucherService {
 
 	@Override
 	public List<VoucherSummaryDto> getVoucherSummary() throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		return ce.execute(new GetvoucherSummary());
 	}
 
 }

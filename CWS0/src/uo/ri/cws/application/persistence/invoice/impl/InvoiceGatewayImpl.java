@@ -44,7 +44,20 @@ public class InvoiceGatewayImpl implements InvoiceGateway {
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
+		PreparedStatement pst = null;
+		try {
+			pst = Jdbc.getCurrentConnection()
+				.prepareStatement(conf.getProperty("TVouchers_remove"));
+			
+			pst.setString(1, id);
+			
+			pst.executeUpdate();
+			
+		} catch( SQLException e) {
+			throw new PersistenceException(e);
+		} finally {
+			Jdbc.close(pst);
+		}
 		
 	}
 
@@ -60,7 +73,7 @@ public class InvoiceGatewayImpl implements InvoiceGateway {
 		ResultSet rs = null;
 		try {
 			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("Invoice_findByDni"));
+					.prepareStatement(conf.getProperty("Invoice_findById"));
 			
 			pst.setString(1, id);
 			

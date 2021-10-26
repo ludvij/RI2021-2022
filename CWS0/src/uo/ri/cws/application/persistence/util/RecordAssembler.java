@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import uo.ri.cws.application.persistence.cash.CashRecord;
+import uo.ri.cws.application.persistence.charge.ChargeRecord;
 import uo.ri.cws.application.persistence.client.ClientRecord;
+import uo.ri.cws.application.persistence.creditcard.CreditCardRecord;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
-import uo.ri.cws.application.persistence.paymentMean.voucher.VoucherRecord;
+import uo.ri.cws.application.persistence.paymentmean.PaymentmeanRecord;
+import uo.ri.cws.application.persistence.voucher.VoucherRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
 public class RecordAssembler {
@@ -112,11 +116,12 @@ public class RecordAssembler {
 		
 		record.id      = rs.getString("id");
 		record.version = rs.getLong("version");
-		record.number  = rs.getLong("number");
-		record.vat     = rs.getDouble("vat");
-		record.date    = rs.getDate("date").toLocalDate();//sqlDate.toLocalDate(); 
-		record.amount  = rs.getDouble("amount");
-		record.status  = rs.getString("status");
+		
+		record.number = rs.getLong("number");
+		record.vat    = rs.getDouble("vat");
+		record.date   = rs.getDate("date").toLocalDate();//sqlDate.toLocalDate(); 
+		record.amount = rs.getDouble("amount");
+		record.status = rs.getString("status");
 		
 		
 		return record;		
@@ -128,7 +133,7 @@ public class RecordAssembler {
 		
 		if (rs.next()) {
 			record = resultSetToClientRecord(rs);
-			}
+		}
 		return Optional.ofNullable(record);
 		
 	}
@@ -161,22 +166,122 @@ public class RecordAssembler {
 		while(rs.next()) {
 			res.add( resultSetToVoucherRecord(rs)	);
 		}
-		
 		return res;
 	}
 
 
 	private static VoucherRecord resultSetToVoucherRecord(ResultSet rs) throws SQLException {
 		VoucherRecord record = new VoucherRecord();
-		record.id          = rs.getString("id");
-		record.version     = rs.getLong("version");
-		
-		record.accumulated = rs.getDouble("accumulated");
-		record.clientId    = rs.getString("client_Id");
-		
-		record.balance     = rs.getDouble("balance");
+					
+		record.available   = rs.getDouble("available");
 		record.code        = rs.getString("code");
 		record.description = rs.getString("description");
+		
 		return record;
+	}
+
+
+	public static Optional<CreditCardRecord> toCreditCardRecord(ResultSet rs) throws SQLException {
+		CreditCardRecord record = null;
+		if (rs.next()) {
+			record = resultSetToCreditCardRecord(rs);
+		}
+		return Optional.ofNullable(record);
+		
+	}
+
+
+	private static CreditCardRecord resultSetToCreditCardRecord(ResultSet rs) throws SQLException {
+		CreditCardRecord record = new CreditCardRecord();
+		
+		
+		record.number    = rs.getString("number");
+		record.type      = rs.getString("type");
+		record.validthru = rs.getDate("validThru").toLocalDate();
+		
+		return record;
+	}
+
+
+	public static Optional<VoucherRecord> toVoucherRecord(ResultSet rs) throws SQLException {
+		VoucherRecord record = null;
+		if (rs.next()) {
+			record = resultSetToVoucherRecord(rs);
+		}
+		return Optional.ofNullable(record);
+	}
+
+
+	public static List<CreditCardRecord> toCreditCardRecordList(ResultSet rs) throws SQLException {
+		List<CreditCardRecord> res = new ArrayList<>();
+		while(rs.next())
+			res.add(resultSetToCreditCardRecord(rs));
+		return res;
+	}
+
+
+	public static Optional<CashRecord> toCashRecord(ResultSet rs) throws SQLException {
+		CashRecord record = null;
+		if (rs.next())
+			record = resultSetToCashRecord(rs);
+		return Optional.ofNullable(record);
+	}
+
+
+	private static CashRecord resultSetToCashRecord(ResultSet rs) throws SQLException {
+		CashRecord record = new CashRecord();
+		
+		return record;
+	}
+
+
+	public static Optional<ChargeRecord> toChargeRecord(ResultSet rs) throws SQLException {
+		ChargeRecord record = null;
+		if (rs.next())
+			record = resultSetToChargeRecord(rs);
+		return Optional.ofNullable(record);
+	}
+
+
+	private static ChargeRecord resultSetToChargeRecord(ResultSet rs) throws SQLException {
+		ChargeRecord record = new ChargeRecord();
+		record.id      = rs.getString("id");
+		record.version = rs.getLong("version");
+	
+		record.paymentMean_id = rs.getString("paymentMean_Id");
+		record.invoice_id     = rs.getString("invoice_id");
+		
+		return record;
+	}
+
+
+	public static List<PaymentmeanRecord> toPaymentMeanRecordList(ResultSet rs) throws SQLException {
+		List<PaymentmeanRecord> res = new ArrayList<>();
+		while (rs.next())
+			res.add(resultSetToPaymentMean(rs));
+		return res;
+	}
+
+
+	private static PaymentmeanRecord resultSetToPaymentMean(ResultSet rs) throws SQLException {
+		PaymentmeanRecord record = new PaymentmeanRecord();
+		
+		record.id      = rs.getString("id");
+		record.version = rs.getLong("version");
+		
+		record.dtype       = rs.getString("dtype");
+		record.client_id   = rs.getString("client_id");
+		record.accumulated = rs.getDouble("accumulated");
+		
+		return record;
+	}
+
+
+	public static Optional<PaymentmeanRecord> toPaymentMeanRecord(ResultSet rs) throws SQLException {
+		PaymentmeanRecord record = null;
+		if (rs.next()) {
+			record = resultSetToPaymentMean(rs);
+		}
+		return Optional.ofNullable(record);
 	}
 }
