@@ -8,11 +8,14 @@ import uo.ri.cws.application.business.util.DtoAssembler;
 import uo.ri.cws.application.business.util.command.Command;
 import uo.ri.cws.application.persistence.PersistenceFactory;
 import uo.ri.cws.application.persistence.client.ClientGateway;
+import uo.ri.cws.application.persistence.vehicle.VehicleGateway;
 import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
 
 public class FindNotInvoicedWorkOrders implements Command<List<InvoicingWorkOrderDto>> {
 	
+	private ClientGateway cg     = PersistenceFactory.forClient();
 	private WorkOrderGateway wog = PersistenceFactory.forWorkOrder();
+	private VehicleGateway vg    = PersistenceFactory.forVehicle();
 	
 	private String customerDni;
 	
@@ -27,18 +30,18 @@ public class FindNotInvoicedWorkOrders implements Command<List<InvoicingWorkOrde
 	@Override
 	public List<InvoicingWorkOrderDto> execute() throws BusinessException 
 	{
-		if (!clientExists(customerDni))
+		var client = cg.findByDni(customerDni);
+		if (client.isEmpty())
 			throw new BusinessException("Client does not exist");
-		var records = wog.findNotInvoiced(customerDni);
 		
-		return DtoAssembler.toInvoicingWorkOrderList(records);
-	}
+		var workOrders = vg.findByClientId(client.get().id).stream()
+				.map(x -> wog.findByVehicleId(x.id))
+				.flatMap(x -> x.stream())
+				.filter(x -> !x.status.equals("INVOICED"))
+				.toList();
 	
-	
-	private boolean clientExists(String dni) 
-	{
-		ClientGateway cg = PersistenceFactory.forClient();
-		return cg.findByDni(dni).isPresent();
+		
+		return DtoAssembler.toInvoicingWorkOrderList(workOrders);
 	}
 	
 }

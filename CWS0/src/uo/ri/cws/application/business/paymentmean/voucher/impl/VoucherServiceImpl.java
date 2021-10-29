@@ -8,6 +8,7 @@ import uo.ri.cws.application.business.paymentmean.voucher.VoucherDto;
 import uo.ri.cws.application.business.paymentmean.voucher.VoucherService;
 import uo.ri.cws.application.business.paymentmean.voucher.VoucherSummaryDto;
 import uo.ri.cws.application.business.paymentmean.voucher.impl.commands.FindVouchersByClientId;
+import uo.ri.cws.application.business.paymentmean.voucher.impl.commands.GenerateVouchers;
 import uo.ri.cws.application.business.paymentmean.voucher.impl.commands.GetvoucherSummary;
 import uo.ri.cws.application.business.util.command.CommandExecutor;
 
@@ -18,7 +19,7 @@ public class VoucherServiceImpl implements VoucherService {
 	@Override
 	public int generateVouchers() throws BusinessException {
 		// TODO Auto-generated method stub
-		return ce.execute(null);
+		return ce.execute(new GenerateVouchers());
 	}
 
 	@Override

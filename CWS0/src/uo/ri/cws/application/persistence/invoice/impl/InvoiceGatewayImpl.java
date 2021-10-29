@@ -73,7 +73,7 @@ public class InvoiceGatewayImpl implements InvoiceGateway {
 		ResultSet rs = null;
 		try {
 			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("Invoice_findById"));
+					.prepareStatement(conf.getProperty("TInvoices_findById"));
 			
 			pst.setString(1, id);
 			

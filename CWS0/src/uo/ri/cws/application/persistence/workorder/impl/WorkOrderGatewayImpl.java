@@ -96,48 +96,6 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 	}
 
 	@Override
-	public List<WorkOrderRecord> findNotInvoiced(String customerDni) {
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		try {
-			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("TWorkOrders_findNotInvoiced"));
-
-			pst.setString(1, customerDni);
-			
-			
-			rs = pst.executeQuery();
-			
-			return RecordAssembler.toWorkOrderRecordList(rs);
-		} catch (SQLException e) {
-			throw new PersistenceException(e);
-		} finally {
-			Jdbc.close(rs, pst);
-		}
-	}
-
-	@Override
-	public Optional<WorkOrderRecord> findByCleintDni(String dni) {
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		try {
-			pst = Jdbc.getCurrentConnection()
-					.prepareStatement(conf.getProperty("TWorkOrders_findByClientDni"));
-
-			pst.setString(1, dni);
-			
-			
-			rs = pst.executeQuery();
-			
-			return RecordAssembler.toWorkOrderRecord(rs);
-		} catch (SQLException e) {
-			throw new PersistenceException(e);
-		} finally {
-			Jdbc.close(rs, pst);
-		}
-	}
-
-	@Override
 	public void markAsInvoiced(String id) {
 		PreparedStatement pst = null;
 		try {
@@ -172,6 +130,27 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 			Jdbc.close(pst);
 		}
 		
+	}
+
+	@Override
+	public List<WorkOrderRecord> findByVehicleId(String id) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			pst = Jdbc.getCurrentConnection()
+					.prepareStatement(conf.getProperty("TWorkOrders_findByVehicleId"));
+
+			pst.setString(1, id);
+			
+			
+			rs = pst.executeQuery();
+			
+			return RecordAssembler.toWorkOrderRecordList(rs);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		} finally {
+			Jdbc.close(rs, pst);
+		}
 	}
 		
 

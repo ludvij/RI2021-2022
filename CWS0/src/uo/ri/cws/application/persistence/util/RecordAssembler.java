@@ -13,6 +13,8 @@ import uo.ri.cws.application.persistence.creditcard.CreditCardRecord;
 import uo.ri.cws.application.persistence.invoice.InvoiceRecord;
 import uo.ri.cws.application.persistence.mechanic.MechanicRecord;
 import uo.ri.cws.application.persistence.paymentmean.PaymentmeanRecord;
+import uo.ri.cws.application.persistence.recommendation.RecommendationRecord;
+import uo.ri.cws.application.persistence.vehicle.VehicleRecord;
 import uo.ri.cws.application.persistence.voucher.VoucherRecord;
 import uo.ri.cws.application.persistence.workorder.WorkOrderRecord;
 
@@ -283,5 +285,51 @@ public class RecordAssembler {
 			record = resultSetToPaymentMean(rs);
 		}
 		return Optional.ofNullable(record);
+	}
+
+
+	public static List<RecommendationRecord> toRecommendationRecordList(ResultSet rs) throws SQLException {
+		List<RecommendationRecord> res = new ArrayList<>();
+		while (rs.next()) {
+			res.add(resultSetToRecommendationRecord(rs));
+		}
+		return res;
+	}
+
+
+	private static RecommendationRecord resultSetToRecommendationRecord(ResultSet rs) throws SQLException {
+		RecommendationRecord record = new RecommendationRecord();
+		record.id      = rs.getString("id");
+		record.version = rs.getLong("version");
+		
+		record.usedForVoucher = rs.getBoolean("usedForVoucher");
+		record.sponsor_id     = rs.getString("sponsor_Id");
+		record.recommended_id = rs.getString("recommended_Id");
+		return record;
+	}
+
+
+	public static List<VehicleRecord> toVehicleRecordList(ResultSet rs) throws SQLException {
+		List<VehicleRecord> res = new ArrayList<>();
+		while (rs.next()) {
+			res.add(resultSetToVehicleRecord(rs));
+		}
+		return res;
+	}
+
+
+	private static VehicleRecord resultSetToVehicleRecord(ResultSet rs) throws SQLException {
+		VehicleRecord record = new VehicleRecord();
+		record.id      = rs.getString("id");
+		record.version = rs.getLong("version");
+		
+		record.client_id      = rs.getString("client_Id");
+		record.vehicletype_id = rs.getString("vehicleType_Id");
+		
+		record.make        = rs.getString("make");
+		record.model       = rs.getString("model");
+		record.platenumber = rs.getString("plateNumber");
+		
+		return record;
 	}
 }

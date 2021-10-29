@@ -29,5 +29,6 @@ public interface InvoiceGateway extends Gateway<InvoiceRecord>{
 	// List<InvoiceRecord> findInvoicesPaidNotUsed() ;
 
 	// List<InvoiceRecord> findPaid() ;
+	
 
 }

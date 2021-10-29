@@ -14,6 +14,10 @@ import uo.ri.cws.application.persistence.mechanic.MechanicGateway;
 import uo.ri.cws.application.persistence.mechanic.impl.MechanicGatewayImpl;
 import uo.ri.cws.application.persistence.paymentmean.PaymentMeanGateway;
 import uo.ri.cws.application.persistence.paymentmean.impl.PaymentMeanGatewayImpl;
+import uo.ri.cws.application.persistence.recommendation.RecommendationGateway;
+import uo.ri.cws.application.persistence.recommendation.impl.RecommendationGatewayImpl;
+import uo.ri.cws.application.persistence.vehicle.VehicleGateway;
+import uo.ri.cws.application.persistence.vehicle.impl.VehicleGatewayImpl;
 import uo.ri.cws.application.persistence.voucher.VoucherGateway;
 import uo.ri.cws.application.persistence.voucher.impl.VoucherGatewayImpl;
 import uo.ri.cws.application.persistence.workorder.WorkOrderGateway;
@@ -37,10 +41,10 @@ public class PersistenceFactory {
 		return new ClientGatewayImpl();
 	}
 	
-//	public static VehicleGateway forVehicle() {
-//		return new VehicleGatewayImpl();
-//	}
-//	
+	public static VehicleGateway forVehicle() {
+		return new VehicleGatewayImpl();
+	}
+	
 //	public static VehicleTypeGateway forVehicleType() {
 //		return new VehicleTypeGatewayImpl();
 //	}
@@ -62,11 +66,11 @@ public class PersistenceFactory {
 	public static VoucherGateway forVoucher() {
 		return new VoucherGatewayImpl();
 	}
-//
-//	public static RecommendationGateway forRecommendation() {
-//		return new RecommendationGatewayImpl();
-//
-//	}
+
+	public static RecommendationGateway forRecommendation() {
+		return new RecommendationGatewayImpl();
+
+	}
 
 	public static CashGateway forCash() {
 		
