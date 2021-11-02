@@ -63,8 +63,6 @@ public class Associations {
 		public static void link(Invoice invoice, WorkOrder workOrder) {
 			workOrder._setInvoice(invoice);
 			invoice._getWorkOrders().add(workOrder);
-			
-
 		}
 
 		public static void unlink(Invoice invoice, WorkOrder workOrder) {

@@ -15,6 +15,25 @@ public class CreditCard extends PaymentMean {
 		ArgumentChecks.isNotEmpty(number);
 		this.number = number;
 	}
+	
+	public CreditCard(String number, String type, LocalDate validThru) {
+		this(number);
+		ArgumentChecks.isNotNull(type);
+		ArgumentChecks.isNotNull(validThru);
+		
+		ArgumentChecks.isNotEmpty(type);
+		
+		this.number = number;
+		this.type = type;
+		this.validThru = validThru;
+	}
+	
+	@Override
+	public void validate(Charge charge)
+	{
+		if (validThru.isBefore(charge.getInvoice().getDate()))
+			throw new IllegalStateException("credit card is invalid");
+	}
 
 	public String getNumber() {
 		return number;

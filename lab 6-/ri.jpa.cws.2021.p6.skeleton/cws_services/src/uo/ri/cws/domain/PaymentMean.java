@@ -14,6 +14,10 @@ public abstract class PaymentMean {
 
 
 
+	
+	public void validate(Charge charge) {
+		
+	}
 
 
 	public void pay(double importe) {

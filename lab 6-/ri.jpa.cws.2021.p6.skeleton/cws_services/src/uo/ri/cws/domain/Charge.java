@@ -14,12 +14,19 @@ public class Charge {
 	private PaymentMean paymentMean;
 
 	public Charge(Invoice invoice, PaymentMean paymentMean, double amount) {
+		
+		ArgumentChecks.isNotNull(invoice);
+		ArgumentChecks.isNotNull(paymentMean);
+		
+		
 		// store the amount
 		this.amount = amount;
-		// increment the paymentMean accumulated -> paymentMean.pay( amount )
-		paymentMean.pay(amount);
 		this.invoice = invoice;
 		this.paymentMean = paymentMean;
+		paymentMean.validate(this);
+		
+		// increment the paymentMean accumulated -> paymentMean.pay( amount )
+		paymentMean.pay(amount);
 		// link invoice, this and paymentMean
 		Associations.Charges.link(paymentMean, this, invoice);
 	}

@@ -15,13 +15,30 @@ public class Voucher extends PaymentMean {
 	 */
 	@Override
 	public void pay(double amount) {
-
+		super.pay(amount);
+		available -= amount;
 	}
 
 	public Voucher(String code) {
 		ArgumentChecks.isNotNull(code);
 		ArgumentChecks.isNotEmpty(code);
 		this.code = code;
+	}
+
+	public Voucher(String code, String description, double available) {
+		this(code);
+		ArgumentChecks.isNotNull(description);
+		ArgumentChecks.isNotEmpty(description);
+		this.description = description;
+		this.available = available;
+	}
+	
+	@Override
+	public void validate(Charge charge)
+	{
+		if (charge.getAmount() > available) {
+			throw new IllegalStateException("Invalid Voucher");
+		}
 	}
 
 	public String getCode() {
@@ -61,6 +78,7 @@ public class Voucher extends PaymentMean {
 		return "Voucher [code=" + code + ", available=" + available
 				+ ", description=" + description + "]";
 	}
+
 	
 	
 	

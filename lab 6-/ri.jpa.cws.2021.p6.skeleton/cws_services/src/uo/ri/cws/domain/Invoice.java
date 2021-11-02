@@ -47,13 +47,19 @@ public class Invoice {
 		
 		this.number = number;
 		this.date = date;
+		workOrders.forEach(this::addWorkOrder);
 	}
 
 	/**
 	 * Computes amount and vat (vat depends on the date)
 	 */
 	private void computeAmount() {
-
+		this.amount = workOrders.stream()
+				.map(x -> x.getAmount())
+				.reduce(0.0d, (a, b) -> a + b);
+		
+		this.vat = date.isBefore(LocalDate.of(2021, 7, 01)) ? 1.18 : 1.21;
+		
 	}
 
 	/**
@@ -66,6 +72,7 @@ public class Invoice {
 		if (status != InvoiceStatus.NOT_YET_PAID)
 			throw new IllegalStateException("invoice not yet paid");
 		Associations.ToInvoice.link(this, workOrder);
+		workOrder.markAsInvoiced();
 		computeAmount();
 
 	}
@@ -77,9 +84,10 @@ public class Invoice {
 	 * @throws IllegalStateException if the invoice status is not NOT_YET_PAID
 	 */
 	public void removeWorkOrder(WorkOrder workOrder) {
-		if (status == InvoiceStatus.NOT_YET_PAID)
+		if (status != InvoiceStatus.NOT_YET_PAID)
 			throw new IllegalStateException("invoice not yet paid");
 		Associations.ToInvoice.unlink(this, workOrder);
+		workOrder.markBackToFinished();
 		computeAmount();
 	}
 
@@ -91,7 +99,12 @@ public class Invoice {
 	 *  	the total of the invoice
 	 */
 	public void settle() {
-
+		if (status == InvoiceStatus.PAID)
+			throw new IllegalStateException("invoice already settled");
+		if (charges.stream().map(x -> x.getAmount()).reduce(0.0d, (a, b) -> a + b) < amount)
+			throw new IllegalStateException("Not enough money");
+		
+		status = InvoiceStatus.PAID;
 	}
 
 	public Set<WorkOrder> getWorkOrders() {
@@ -119,7 +132,7 @@ public class Invoice {
 	}
 
 	public double getAmount() {
-		return amount;
+		return Math.round(amount * vat * 100.0d) / 100.0d;
 	}
 
 	public double getVat() {
@@ -151,6 +164,10 @@ public class Invoice {
 	public String toString() {
 		return "Invoice [number=" + number + ", date=" + date + ", amount="
 				+ amount + ", vat=" + vat + ", status=" + status + "]";
+	}
+
+	public boolean isNotSettled() {
+		return status != InvoiceStatus.PAID;
 	}
 	
 	

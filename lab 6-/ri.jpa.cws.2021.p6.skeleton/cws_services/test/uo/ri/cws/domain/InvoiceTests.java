@@ -50,7 +50,6 @@ public class InvoiceTests {
 		List<WorkOrder> workOrders = new ArrayList<>();
 		workOrders.add( workOrder );
 		Invoice invoice = new Invoice( 0L, workOrders );
-
 		assertTrue( invoice.getAmount() ==  302.5 );
 	}
 

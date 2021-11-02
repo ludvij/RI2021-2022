@@ -41,7 +41,7 @@ public class Vehicle {
 	
 	
 	public Set<WorkOrder> getWorkOrders() {
-		return new HashSet<>  (workOrders );
+		return new HashSet<>( workOrders );
 	}
 
 	Set<WorkOrder> _getWorkOrders() {

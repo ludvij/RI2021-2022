@@ -22,6 +22,7 @@ public class Substitution {
 	public Substitution(SparePart sparePart, Intervention intervention,
 			int quantity) {
 		this(sparePart, intervention);
+		ArgumentChecks.isTrue(quantity > 0);
 		this.quantity = quantity;
 	}
 
@@ -31,6 +32,11 @@ public class Substitution {
 
 	public SparePart getSparePart() {
 		return sparePart;
+	}
+	
+	public double getAmount() {
+
+		return quantity * sparePart.getPrice();
 	}
 
 	public Intervention getIntervention() {

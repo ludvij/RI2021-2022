@@ -16,19 +16,20 @@ public class Intervention {
 	private WorkOrder workOrder;
 	private Mechanic mechanic;
 	private Set<Substitution> substitutions = new HashSet<>();
-	
-	public Intervention(Mechanic Mechanic, WorkOrder workOrder) {
+
+	public Intervention(Mechanic Mechanic, WorkOrder workOrder,
+			LocalDateTime date) {
 		ArgumentChecks.isNotNull(Mechanic);
 		ArgumentChecks.isNotNull(workOrder);
-	
-		this.date = LocalDateTime.now();
-		
+		ArgumentChecks.isNotNull(date);
+
+		this.date = date;
+
 		Associations.Intervene.link(workOrder, this, Mechanic);
 	}
-	
-	
+
 	public Intervention(Mechanic mechanic, WorkOrder workOrder, int minutes) {
-		this(mechanic, workOrder);
+		this(mechanic, workOrder, LocalDateTime.now());
 		this.minutes = minutes;
 	}
 
@@ -41,7 +42,7 @@ public class Intervention {
 	}
 
 	public Set<Substitution> getSubstitutions() {
-		return new HashSet<>( substitutions );
+		return new HashSet<>(substitutions);
 	}
 
 	Set<Substitution> _getSubstitutions() {
@@ -56,6 +57,18 @@ public class Intervention {
 		return minutes;
 	}
 
+	public double getAmount() {
+		if (workOrder == null)
+			throw new IllegalStateException("workorder is null");
+
+		double price = minutes / 60.0d
+				* workOrder.getVehicle().getVehicleType().getPricePerHour();
+		double subs = substitutions.stream().map(x -> x.getAmount())
+				.reduce(0.0d, (a, b) -> a + b);
+
+		return price + subs;
+	}
+
 	public WorkOrder getWorkOrder() {
 		return workOrder;
 	}
@@ -66,7 +79,7 @@ public class Intervention {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(mechanic, workOrder);
+		return Objects.hash(date, mechanic, workOrder);
 	}
 
 	@Override
@@ -78,7 +91,8 @@ public class Intervention {
 		if (getClass() != obj.getClass())
 			return false;
 		Intervention other = (Intervention) obj;
-		return Objects.equals(mechanic, other.mechanic)
+		return Objects.equals(date, other.date)
+				&& Objects.equals(mechanic, other.mechanic)
 				&& Objects.equals(workOrder, other.workOrder);
 	}
 
@@ -86,6 +100,5 @@ public class Intervention {
 	public String toString() {
 		return "Intervention [date=" + date + ", minutes=" + minutes + "]";
 	}
-	
 
 }

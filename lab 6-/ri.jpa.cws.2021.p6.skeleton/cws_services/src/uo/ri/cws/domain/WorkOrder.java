@@ -27,10 +27,11 @@ public class WorkOrder {
 	private Invoice invoice;
 	private Set<Intervention> interventions = new HashSet<>();
 	
-	
-	
-	public WorkOrder(Vehicle vehicle) {
+	public WorkOrder(Vehicle vehicle, LocalDateTime date) {
 		ArgumentChecks.isNotNull(vehicle);
+		ArgumentChecks.isNotNull(date);
+		
+		this.date = date;
 		
 		Associations.Fix.link(vehicle, this);
 	}
@@ -40,7 +41,10 @@ public class WorkOrder {
 	
 	
 	public WorkOrder(Vehicle vehicle, String description) {
-		this(vehicle);
+		this(vehicle, LocalDateTime.now());
+		ArgumentChecks.isNotNull(description);
+		ArgumentChecks.isNotEmpty(description);
+		
 		this.description = description;
 	}
 
@@ -53,6 +57,11 @@ public class WorkOrder {
 	 *  - The work order is not linked with the invoice
 	 */
 	public void markAsInvoiced() {
+		if (status != WorkOrderStatus.FINISHED)
+			throw new IllegalStateException("workorder is not finished");
+		if (invoice == null)
+			throw new IllegalStateException("workorder is not linked to a invoice");
+		this.status = WorkOrderStatus.INVOICED;
 
 	}
 
@@ -72,7 +81,10 @@ public class WorkOrder {
 			throw new IllegalStateException("workOrder is not linked");
 		
 		status = WorkOrderStatus.FINISHED;
-
+		
+		this.amount = interventions.stream()
+				.map(Intervention::getAmount)
+				.reduce(0.0d, (a, b) -> a + b);
 
 	}
 
@@ -85,6 +97,11 @@ public class WorkOrder {
 	 *  - The work order is still linked with the invoice
 	 */
 	public void markBackToFinished() {
+		if (status != WorkOrderStatus.INVOICED)
+			throw new IllegalStateException("workorder is not invoiced");
+		if (invoice != null)
+			throw new IllegalStateException("invoice still linked");
+		status = WorkOrderStatus.FINISHED;
 
 	}
 
@@ -124,7 +141,10 @@ public class WorkOrder {
 	 * 	- The work order is not in FINISHED status
 	 */
 	public void reopen() {
-
+		if (status != WorkOrderStatus.FINISHED)
+			throw new IllegalStateException("WorkOrder is not finished");
+		this.status = WorkOrderStatus.OPEN;
+		Associations.Assign.unlink(mechanic, this);
 	}
 
 	public Set<Intervention> getInterventions() {
@@ -192,9 +212,8 @@ public class WorkOrder {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(vehicle);
+		return Objects.hash(date, vehicle);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -205,7 +224,8 @@ public class WorkOrder {
 		if (getClass() != obj.getClass())
 			return false;
 		WorkOrder other = (WorkOrder) obj;
-		return Objects.equals(vehicle, other.vehicle);
+		return Objects.equals(date, other.date)
+				&& Objects.equals(vehicle, other.vehicle);
 	}
 
 
