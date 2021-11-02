@@ -1,4 +1,3 @@
 *.class
-*.sh
+
 /bin
-/additional classes
