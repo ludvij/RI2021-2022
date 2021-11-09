@@ -1,0 +1,1 @@
+@java -classpath hsqldb.jar org.hsqldb.util.DatabaseManagerSwing -url jdbc:hsqldb:hsql://0.0.0.0:9002/ -driver org.hsqldb.jdbcDriver
