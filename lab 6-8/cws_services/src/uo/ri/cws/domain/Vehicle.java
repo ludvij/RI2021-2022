@@ -4,29 +4,20 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(name = "TVehicles")
 public class Vehicle extends BaseEntity {
 	
-	@Column(unique = true)
 	private String plateNumber;
 	private String make;
 	private String model;
 	
 	// accidental
-	@ManyToOne private Client client;
-	@ManyToOne private VehicleType vehicleType;
+	private Client client;
+	private VehicleType vehicleType;
 	
-	@OneToMany(mappedBy = "vehicle")
+	
 	private Set<WorkOrder> workOrders = new HashSet<>();
 	
 	Vehicle() {}

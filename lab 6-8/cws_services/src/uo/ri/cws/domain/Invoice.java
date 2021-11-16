@@ -7,37 +7,26 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(name = "TInvoices")
 public class Invoice extends BaseEntity {
 	public enum InvoiceStatus { NOT_YET_PAID, PAID }
 
 	// natural attributes
-	@Column(unique = true)
 	private Long number;
 	
 	private LocalDate date;
 	private double amount;
 	private double vat;
 	
-	@Enumerated(EnumType.STRING)
 	private InvoiceStatus status = InvoiceStatus.NOT_YET_PAID;
 
 	// accidental attributes
-	@OneToMany(mappedBy = "invoice")
 	private Set<WorkOrder> workOrders = new HashSet<>();
-	@OneToMany(mappedBy = "invoice")
 	private Set<Charge> charges = new HashSet<>();
+	
+	private boolean used = false;
 	
 	Invoice() {}
 
@@ -76,7 +65,7 @@ public class Invoice extends BaseEntity {
 				.map(x -> x.getAmount())
 				.reduce(0.0d, (a, b) -> a + b);
 		
-		this.vat = date.isBefore(LocalDate.of(2021, 7, 01)) ? 1.18 : 1.21;
+		this.vat = date.isBefore(LocalDate.of(2012, 7, 01)) ? 1.18 : 1.21;
 		
 	}
 
@@ -119,8 +108,14 @@ public class Invoice extends BaseEntity {
 	public void settle() {
 		if (status == InvoiceStatus.PAID)
 			throw new IllegalStateException("invoice already settled");
-		if (charges.stream().map(x -> x.getAmount()).reduce(0.0d, (a, b) -> a + b) < amount)
+	
+		double chargesAmount = getChargesAmount();
+		
+		double diff = chargesAmount - amount * vat;
+		if (diff >= 0.01)
 			throw new IllegalStateException("Not enough money");
+		else if (diff <= -0.01)
+			throw new IllegalStateException("Too much money");
 		
 		status = InvoiceStatus.PAID;
 	}
@@ -185,8 +180,36 @@ public class Invoice extends BaseEntity {
 	}
 
 	public boolean isNotSettled() {
-		return status != InvoiceStatus.PAID;
+		return status == InvoiceStatus.NOT_YET_PAID;
 	}
+	
+	public boolean isSettled() {
+		return status == InvoiceStatus.PAID;
+	}
+
+	public boolean canGenerate500Voucher() {
+		
+		return getChargesAmount() > 500 && !used;
+	}
+
+	public void markAsUsed() {
+		if (!canGenerate500Voucher())
+			throw new IllegalStateException("Can't generate vouchers");
+		if (used)
+			throw new IllegalStateException("Invoice already used");
+		used = true;
+	}
+
+	public boolean isUsedForVoucher() {
+		return used;
+	}
+	
+	private double getChargesAmount() {
+		return charges.stream()
+				.map(x -> x.getAmount())
+				.reduce(0.0d, (a, b) -> a + b);
+	}
+	
 	
 	
 

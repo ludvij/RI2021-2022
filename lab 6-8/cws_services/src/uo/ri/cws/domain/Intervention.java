@@ -6,32 +6,18 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(
-	name = "TInterventions",
-	uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"MECHANIC_ID", "WORKORDER_ID", "DATE"})
-	}
-)
 public class Intervention extends BaseEntity {
 	// natural attributes
 	private LocalDateTime date;
 	private int minutes;
 
 	// accidental attributes
-	@ManyToOne private WorkOrder workOrder;
-	@ManyToOne private Mechanic mechanic;
-	
-	@OneToMany(mappedBy = "intervention")
+	private WorkOrder workOrder;
+	private Mechanic mechanic;
+
 	private Set<Substitution> substitutions = new HashSet<>();
 	
 	Intervention() {}
@@ -75,8 +61,9 @@ public class Intervention extends BaseEntity {
 	}
 
 	public LocalDateTime getDate() {
-		return date;
+		return LocalDateTime.from(date);
 	}
+	
 
 	public int getMinutes() {
 		return minutes;
@@ -124,6 +111,11 @@ public class Intervention extends BaseEntity {
 	@Override
 	public String toString() {
 		return "Intervention [date=" + date + ", minutes=" + minutes + "]";
+	}
+
+	public void setMinutes(int minutes) {
+		this.minutes = minutes;
+		
 	}
 
 }

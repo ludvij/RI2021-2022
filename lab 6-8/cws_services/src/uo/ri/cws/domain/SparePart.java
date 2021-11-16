@@ -4,25 +4,16 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(name = "TspareParts")
 public class SparePart extends BaseEntity{
 	// natural attributes
-	@Column(unique = true)
 	private String code;
 	private String description;
 	private double price;
 
 	// accidental attributes
-	@OneToMany(mappedBy = "sparePart")
 	private Set<Substitution> substitutions = new HashSet<>();
 	
 	SparePart() {}

@@ -2,28 +2,16 @@ package uo.ri.cws.domain;
 
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(
-	name = "TSubstitutions",
-	uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"SPAREPART_ID", "INTERVENTION_ID"})
-	}
-)
 public class Substitution extends BaseEntity {
 	// natural attributes
 	private int quantity;
 
 	// accidental attributes
-	@ManyToOne private SparePart sparePart;
-	@ManyToOne private Intervention intervention;
+	private SparePart sparePart;
+	private Intervention intervention;
 	
 	public Substitution() {}
 

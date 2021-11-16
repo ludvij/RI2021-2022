@@ -2,29 +2,18 @@ package uo.ri.cws.domain;
 
 import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.Invoice.InvoiceStatus;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(
-	name = "TCharges",
-	uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"INVOICE_ID", "PAYMENTMEAN_ID"})
-	}
-)
+
 public class Charge extends BaseEntity {
 	// natural attributes
 	private double amount = 0.0;
 
 	// accidental attributes
-	@ManyToOne private Invoice     invoice;
-	@ManyToOne private PaymentMean paymentMean;
+	private Invoice     invoice;
+	private PaymentMean paymentMean;
 
 	public Charge(Invoice invoice, PaymentMean paymentMean, double amount) {
 		

@@ -4,28 +4,19 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(name = "TMechanics")
+
 public class Mechanic extends BaseEntity{
 	// natural attributes
-	@Column(unique = true)
 	private String dni;
 	
 	private String surname;
 	private String name;
 
 	// accidental attributes
-	@OneToMany(mappedBy = "mechanic")
 	private Set<WorkOrder> assigned = new HashSet<>();
-	@OneToMany(mappedBy = "mechanic")
 	private Set<Intervention> interventions = new HashSet<>();
 	
 	Mechanic() {}

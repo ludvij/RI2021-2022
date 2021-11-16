@@ -1,10 +1,7 @@
 package uo.ri.cws.domain;
 
-import javax.persistence.Embeddable;
-
 import alb.util.assertion.ArgumentChecks;
 
-@Embeddable
 public class Address {
 	private String street;
 	private String city;

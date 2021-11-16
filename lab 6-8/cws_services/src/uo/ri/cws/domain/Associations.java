@@ -146,4 +146,28 @@ public class Associations {
 
 	}
 
+	public static class Recommend {
+
+		public static void link(Client sponsor, Recommendation recommendation,
+				Client recommended) {
+			recommendation._setRecommended(recommended);
+			recommendation._setSponsor(sponsor);
+			
+			sponsor._getSponsored().add(recommendation);
+			recommended._setRecommended(recommendation);
+			
+			
+		}
+		
+		public static void unlink(Recommendation recommendation) {
+			recommendation.getSponsor()._getSponsored().remove(recommendation);
+			recommendation.getRecommended()._setRecommended(null);
+			
+			recommendation._setRecommended(null);
+			recommendation._setSponsor(null);
+			
+		}
+
+	}
+
 }

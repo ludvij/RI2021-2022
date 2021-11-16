@@ -6,24 +6,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
-@Entity
-@Table(
-	name = "TWorkOrders",
-	uniqueConstraints = {
-		@UniqueConstraint(columnNames = {"VEHICLE_ID", "DATE"})
-	}
-)
 public class WorkOrder extends BaseEntity{
 	public enum WorkOrderStatus {
 		OPEN,
@@ -37,15 +22,15 @@ public class WorkOrder extends BaseEntity{
 	private String description;
 	private double amount = 0.0;
 	
-	@Enumerated(EnumType.STRING)
 	private WorkOrderStatus status = WorkOrderStatus.OPEN;
 
 	// accidental attributes
-	@ManyToOne private Vehicle vehicle;
-	@ManyToOne private Mechanic mechanic;
-	@ManyToOne private Invoice invoice;
+	private Vehicle vehicle;
+	private Mechanic mechanic;
+	private Invoice invoice;
 	
-	@OneToMany(mappedBy = "workOrder")
+	private boolean usedForVoucher = false;
+	
 	private Set<Intervention> interventions = new HashSet<>();
 	
 	WorkOrder() {}
@@ -153,7 +138,9 @@ public class WorkOrder extends BaseEntity{
 			throw new IllegalStateException("workorder not open");
 		if (this.mechanic != null) 
 			throw new IllegalStateException("workorder already assigned");
+		
 		Associations.Assign.link(mechanic, this);
+		
 		status = WorkOrderStatus.ASSIGNED;
 	}
 
@@ -165,6 +152,12 @@ public class WorkOrder extends BaseEntity{
 	 * 	- The work order is not in ASSIGNED status
 	 */
 	public void desassign() {
+		if (status != WorkOrderStatus.ASSIGNED)
+			throw new IllegalStateException("workorder is not assigned");
+		
+		Associations.Assign.unlink(mechanic, this);
+		
+		status = WorkOrderStatus.OPEN;
 
 	}
 
@@ -208,7 +201,7 @@ public class WorkOrder extends BaseEntity{
 
 
 	public LocalDateTime getDate() {
-		return date;
+		return LocalDateTime.from(date);
 	}
 
 
@@ -269,6 +262,14 @@ public class WorkOrder extends BaseEntity{
 		return "WorkOrder [date=" + date + ", description=" + description
 				+ ", amount=" + amount + ", status=" + status + ", vehicle="
 				+ vehicle + "]";
+	}
+
+	public boolean canBeUsedForVoucher() {
+		return isInvoiced() && invoice.isSettled() && !usedForVoucher;
+	}
+
+	public void markAsUsedForVoucher() {
+		usedForVoucher = true;
 	}
 	
 }

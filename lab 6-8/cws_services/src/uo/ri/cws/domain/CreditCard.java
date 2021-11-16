@@ -3,39 +3,42 @@ package uo.ri.cws.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import alb.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name = "TCreditCards")
 public class CreditCard extends PaymentMean {
-	@Column(unique = true)
+	
 	private String number;
 	private String type;
 	private LocalDate validThru;
 	
-	public CreditCard(String number) {
-		ArgumentChecks.isNotNull(number);
-		ArgumentChecks.isNotEmpty(number);
-		this.number = number;
-	}
-	
-	CreditCard() {}
-	
 	public CreditCard(String number, String type, LocalDate validThru) {
-		this(number);
 		ArgumentChecks.isNotNull(type);
 		ArgumentChecks.isNotNull(validThru);
+		ArgumentChecks.isNotNull(number);
 		
+		ArgumentChecks.isNotEmpty(number);
 		ArgumentChecks.isNotEmpty(type);
 		
 		this.number = number;
 		this.type = type;
 		this.validThru = validThru;
 	}
+	
+	public CreditCard(String number) {
+		this(number, "UNKNOWN", LocalDate.now().plusDays(1));
+	}
+	
+	CreditCard() {}
+	
+	
+	@Override
+	public void pay(double price)
+	{
+		if (!isValidNow())
+			throw new IllegalStateException("credit card is not valid");
+		super.pay(price);
+	}
+	
 	
 	@Override
 	public void validate(Charge charge)
@@ -77,5 +80,14 @@ public class CreditCard extends PaymentMean {
 	public String toString() {
 		return "CreditCard [number=" + number + ", type=" + type
 				+ ", validThru=" + validThru + "]";
+	}
+
+	public boolean isValidNow() {
+		return LocalDate.now().isBefore(validThru);
+	}
+
+	public void setValidThru(LocalDate minusDays) {
+		validThru = minusDays;
+		
 	}
 }

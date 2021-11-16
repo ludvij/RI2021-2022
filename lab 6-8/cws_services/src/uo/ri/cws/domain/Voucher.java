@@ -2,17 +2,10 @@ package uo.ri.cws.domain;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import alb.util.assertion.ArgumentChecks;
 
-@Entity
-@Table(name = "TVouchers")
 public class Voucher extends PaymentMean {
 	
-	@Column(unique = true)
 	private String code;
 	private double available = 0.0;
 	private String description;
@@ -23,27 +16,35 @@ public class Voucher extends PaymentMean {
 	 */
 	@Override
 	public void pay(double amount) {
+		if (amount > available)
+			throw new IllegalStateException("Not enough money");
 		super.pay(amount);
 		available -= amount;
 	}
 
 	Voucher() {}
 	
-	
-	public Voucher(String code) {
-		ArgumentChecks.isNotNull(code);
-		ArgumentChecks.isNotEmpty(code);
-		this.code = code;
-	}
-
 	public Voucher(String code, String description, double available) {
-		this(code);
+		
 		ArgumentChecks.isNotNull(description);
+		ArgumentChecks.isNotNull(code);
+		
 		ArgumentChecks.isNotEmpty(description);
+		ArgumentChecks.isNotEmpty(code);
+		
+		this.code = code;
 		this.description = description;
 		this.available = available;
 	}
 	
+	public Voucher(String code, double available) {
+		this(code, "no-description", available);
+	}
+	
+	public Voucher(String code) {
+		this(code, "no-description", 0);
+	}
+
 	@Override
 	public void validate(Charge charge)
 	{
