@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings 
-	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
-        http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd" version="2.2"
->
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd" version="2.2">
     
     
     
@@ -29,17 +27,14 @@
     		</basic>
     		<one-to-many name="paymentMeans" mapped-by="client"     />
     		<one-to-many name="vehicles"     mapped-by="client"     />
-    		<one-to-many name="sponsored"    mapped-by="sponsor"    />
-    		<one-to-one  name="recommended"  mapped-by="recommended"/>
+    		<one-to-many name="sponsored"    mapped-by="sponsor"    />		
+    		<one-to-one name="recommendedBy" mapped-by="recommended"/>
     	</attributes>
     </entity>
     
     <entity class="uo.ri.cws.domain.Vehicle">
 		<table name="TVehicles"/>
-		<!-- Vehicle queries --> 
-		<named-query name="Vehicle.findByPlate">
-			<query>select v from Vehicle v where v.plateNumber = ?1</query>
-		</named-query>
+		
 		<attributes>
 			<basic name="plateNumber" optional="false">
 				<column unique="true"/>
@@ -75,14 +70,7 @@
 	
 	<entity class="uo.ri.cws.domain.Mechanic">
 		<table name="TMechanics"/>
-		<!-- Mechanic queries -->
-		<named-query name="Mechanic.findByDni">
-			<query>
-				select m 
-				from Mechanic m 
-				where m.dni = ?1
-			</query>
-		</named-query>
+
 		<attributes>
 			<basic name="dni" optional="false">
 				<column unique="true"/>
@@ -119,17 +107,6 @@
 	<entity class="uo.ri.cws.domain.PaymentMean">
 		<table name="TPaymentMeans"/>
 		<inheritance strategy="JOINED"/>
-		<!-- PaymentMean queries -->
-		<named-query name="PaymentMean.findByInvoiceId">
-			<query>
-				select m 
-				from Invoice f 
-					join f.workOrders w 
-					join w.vehicle.client c 
-					join c.paymentMeans m 
-				where f.id = ?1
-			</query>
-		</named-query>
 		<attributes>
 			<many-to-one name="client"/>
 			<one-to-many name="charges" mapped-by="paymentMean"/>
@@ -175,14 +152,6 @@
 	
 	<entity class="uo.ri.cws.domain.Invoice">
 		<table name="TInvoices"/>
-		<!-- Invoice queries -->
-		<named-query name="Invoice.findByNumber">
-			<query>select f from Invoice f where f.number = ?1</query>
-		</named-query>
-		
-		<named-query name="Invoice.getNextInvoiceNumber">
-			<query>select coalesce(max(f.number), 0) + 1 from Invoice f</query>
-		</named-query>
 		<attributes>
 			<basic name="number" optional="false">
 				<column unique="true"/>
@@ -202,10 +171,6 @@
 				<column-name>DATE</column-name>
 			</unique-constraint>
 		</table>
-		<!-- WorkOrder queries --> 
-		<named-query name="WorkOrder.findByIds">
-			<query>select a from WorkOrder a where a.id in ?1</query>
-		</named-query>
 		<attributes>
 			<basic name="status">
 				<enumerated>STRING</enumerated>

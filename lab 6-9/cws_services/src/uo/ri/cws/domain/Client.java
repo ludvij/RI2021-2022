@@ -27,21 +27,21 @@ public class Client extends BaseEntity {
 	// clients whom I sponsored
 	private Set<Recommendation> sponsored = new HashSet<>();
 	// client who sponsored me
-	private Recommendation recommended;
+	private Recommendation recommendedBy;
 	
 	
 	Client() {}
 	
 	public Client(String dni) {
-		ArgumentChecks.isNotNull(dni);
-		ArgumentChecks.isNotEmpty(dni);
-		this.dni = dni;
+		this(dni, "no-name", "no-surname");
 	}
 	
 	public Client(String dni, String name, String surname) {
-		this(dni);
+		ArgumentChecks.isNotNull(dni);
+		ArgumentChecks.isNotEmpty(dni);
 		ArgumentChecks.isNotNull(name);
 		ArgumentChecks.isNotNull(surname);
+		this.dni = dni;
 		this.name = name;
 		this.surname = surname;
 		
@@ -73,11 +73,11 @@ public class Client extends BaseEntity {
 	}
 	
 	void _setRecommended(Recommendation recommended) {
-		this.recommended = recommended;		
+		this.recommendedBy = recommended;		
 	}
 	
 	public Recommendation getRecommended() {
-		return recommended;
+		return recommendedBy;
 	}	
 	public List<WorkOrder> getWorkOrdersAvailableForVoucher() {
 		return vehicles.stream()
