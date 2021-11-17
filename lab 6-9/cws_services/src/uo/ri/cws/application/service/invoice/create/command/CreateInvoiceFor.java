@@ -21,6 +21,11 @@ public class CreateInvoiceFor implements Command<InvoiceDto>{
 
 	public CreateInvoiceFor(List<String> workOrderIds) {
 		ArgumentChecks.isNotNull( workOrderIds );
+		ArgumentChecks.isTrue(!workOrderIds.isEmpty());
+		for (var wo : workOrderIds) { 
+			ArgumentChecks.isNotNull(wo); 
+			ArgumentChecks.isNotEmpty(wo);
+		}
 		this.workOrderIds = workOrderIds;
 	}
 

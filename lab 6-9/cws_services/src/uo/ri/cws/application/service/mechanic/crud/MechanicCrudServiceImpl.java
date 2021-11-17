@@ -9,22 +9,23 @@ import uo.ri.cws.application.service.mechanic.MechanicCrudService;
 import uo.ri.cws.application.service.mechanic.crud.command.AddMechanic;
 import uo.ri.cws.application.service.mechanic.crud.command.DeleteMechanic;
 import uo.ri.cws.application.service.mechanic.crud.command.FindAllMechanics;
+import uo.ri.cws.application.service.mechanic.crud.command.FindMechanicByDni;
 import uo.ri.cws.application.service.mechanic.crud.command.FindMechanicById;
 import uo.ri.cws.application.service.mechanic.crud.command.UpdateMechanic;
 import uo.ri.cws.application.util.command.CommandExecutor;
 
 public class MechanicCrudServiceImpl implements MechanicCrudService {
-	
+
 	private CommandExecutor executor = Factory.executor.forExecutor();
 
 	@Override
 	public MechanicDto addMechanic(MechanicDto dto) throws BusinessException {
-		return executor.execute(new AddMechanic( dto ));
+		return executor.execute(new AddMechanic(dto));
 	}
 
 	@Override
 	public void updateMechanic(MechanicDto dto) throws BusinessException {
-		executor.execute(new UpdateMechanic( dto ));
+		executor.execute(new UpdateMechanic(dto));
 	}
 
 	@Override
@@ -38,8 +39,15 @@ public class MechanicCrudServiceImpl implements MechanicCrudService {
 	}
 
 	@Override
-	public Optional<MechanicDto> findMechanicById(String id) throws BusinessException {
+	public Optional<MechanicDto> findMechanicById(String id)
+			throws BusinessException {
 		return executor.execute(new FindMechanicById(id));
+	}
+
+	@Override
+	public Optional<MechanicDto> findMechanicByDni(String dniMechanic)
+			throws BusinessException {
+		return executor.execute(new FindMechanicByDni(dniMechanic));
 	}
 
 }

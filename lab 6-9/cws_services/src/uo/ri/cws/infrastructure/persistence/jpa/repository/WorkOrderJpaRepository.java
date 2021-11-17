@@ -19,4 +19,9 @@ public class WorkOrderJpaRepository
 				.getResultList();
 		}
 
+	@Override
+	public List<WorkOrder> findNotInvoicedWorkOrdersByClientDni(String dni) {
+		throw new RuntimeException("Not yet implemented");
+	}
+
 }

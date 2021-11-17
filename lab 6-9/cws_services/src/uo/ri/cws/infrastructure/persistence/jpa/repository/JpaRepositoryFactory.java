@@ -1,10 +1,12 @@
 package uo.ri.cws.infrastructure.persistence.jpa.repository;
 
+import uo.ri.cws.application.repository.ChargeRepository;
 import uo.ri.cws.application.repository.ClientRepository;
 import uo.ri.cws.application.repository.InterventionRepository;
 import uo.ri.cws.application.repository.InvoiceRepository;
 import uo.ri.cws.application.repository.MechanicRepository;
 import uo.ri.cws.application.repository.PaymentMeanRepository;
+import uo.ri.cws.application.repository.RecommendationRepository;
 import uo.ri.cws.application.repository.RepositoryFactory;
 import uo.ri.cws.application.repository.SparePartRepository;
 import uo.ri.cws.application.repository.VehicleRepository;
@@ -56,6 +58,16 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 	@Override
 	public VehicleTypeRepository forVehicleType() {
 		return new VehicleTypeJpaRepository();
+	}
+
+	@Override
+	public RecommendationRepository forRecomendacion() {
+		throw new RuntimeException("Not yet implemented");
+	}
+
+	@Override
+	public ChargeRepository forCharge() {
+		throw new RuntimeException("Not yet implemented");
 	}
 
 }

@@ -6,8 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import alb.util.assertion.ArgumentChecks;
+import alb.util.math.Round;
 import uo.ri.cws.domain.base.BaseEntity;
 
 public class Invoice extends BaseEntity {
@@ -63,9 +65,11 @@ public class Invoice extends BaseEntity {
 	private void computeAmount() {
 		this.amount = workOrders.stream()
 				.map(x -> x.getAmount())
-				.reduce(0.0d, (a, b) -> a + b);
+				.collect(Collectors.summingDouble(Double::doubleValue));
 		
 		this.vat = date.isBefore(LocalDate.of(2012, 7, 01)) ? 1.18 : 1.21;
+		
+		this.amount = Round.twoCents(amount * vat);
 		
 	}
 
@@ -145,7 +149,7 @@ public class Invoice extends BaseEntity {
 	}
 
 	public double getAmount() {
-		return Math.round(amount * vat * 100.0d) / 100.0d;
+		return amount;
 	}
 
 	public double getVat() {
@@ -207,7 +211,7 @@ public class Invoice extends BaseEntity {
 	private double getChargesAmount() {
 		return charges.stream()
 				.map(x -> x.getAmount())
-				.reduce(0.0d, (a, b) -> a + b);
+				.collect(Collectors.summingDouble(Double::doubleValue));
 	}
 	
 	

@@ -19,8 +19,9 @@ public class AddMechanic implements Command<MechanicDto> {
 	}
 
 	public MechanicDto execute() throws BusinessException {
+		
+		existsMechanic();
 
-		//checkValidData(dto);
 		Mechanic m = new Mechanic(dto.dni, dto.name, dto.surname);
 
 		dto.id = m.getId();
@@ -28,6 +29,11 @@ public class AddMechanic implements Command<MechanicDto> {
 		repo.add( m );
 	
 		return dto;
+	}
+	
+	private void existsMechanic() throws BusinessException {
+		if (repo.findByDni(dto.dni).isPresent())
+			throw new BusinessException("Mechanic already exists");
 	}
 
 }

@@ -27,20 +27,35 @@ public class InvoicingServiceImpl implements InvoicingService {
 		throw new RuntimeException("Not yet implemented");
 	}
 
+
 	@Override
-	public Optional<InvoiceDto> findInvoice(Long number)
+	public List<InvoicingPaymentMeanDto> findPayMeansByClientDni(String dni)
+			throws BusinessException {
+		throw new RuntimeException("Not yet implemented");
+	}
+
+
+
+	@Override
+	public List<InvoicingWorkOrderDto> findNotInvoicedWorkOrdersByClientDni(
+			String dni) throws BusinessException {
+		throw new RuntimeException("Not yet implemented");
+	}
+
+	@Override
+	public List<InvoicingWorkOrderDto> findWorkOrdersByPlateNumber(String plate)
 			throws BusinessException {
 		throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override
-	public List<PaymentMeanDto> findPayMeansByClientDni(String dni)
+	public Optional<InvoiceDto> findInvoiceByNumber(Long number)
 			throws BusinessException {
 		throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override
-	public void settleInvoice(String invoiceId, Map<Long, Double> charges)
+	public void settleInvoice(String invoiceId, Map<String, Double> charges)
 			throws BusinessException {
 		throw new RuntimeException("Not yet implemented");
 	}

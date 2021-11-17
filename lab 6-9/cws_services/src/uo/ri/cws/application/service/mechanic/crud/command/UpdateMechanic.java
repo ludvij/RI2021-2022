@@ -17,8 +17,14 @@ public class UpdateMechanic implements Command<Void>{
 	public UpdateMechanic(MechanicDto dto) {
 		ArgumentChecks.isNotNull(dto);
 		ArgumentChecks.isNotNull(dto.id);
+		ArgumentChecks.isNotNull(dto.dni);
 		ArgumentChecks.isNotNull(dto.name);
 		ArgumentChecks.isNotNull(dto.surname);
+		
+		ArgumentChecks.isNotEmpty(dto.id);
+		ArgumentChecks.isNotEmpty(dto.dni);
+		ArgumentChecks.isNotEmpty(dto.name);
+		ArgumentChecks.isNotEmpty(dto.surname);
 		
 		this.dto = dto;
 	}
