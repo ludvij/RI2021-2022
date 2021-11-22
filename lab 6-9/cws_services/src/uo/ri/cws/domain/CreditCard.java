@@ -6,43 +6,48 @@ import java.util.Objects;
 import alb.util.assertion.ArgumentChecks;
 
 public class CreditCard extends PaymentMean {
-	
+
 	private String number;
 	private String type;
 	private LocalDate validThru;
-	
+
 	public CreditCard(String number, String type, LocalDate validThru) {
+		super("CreditCard");
 		ArgumentChecks.isNotNull(type);
 		ArgumentChecks.isNotNull(validThru);
 		ArgumentChecks.isNotNull(number);
-		
+
 		ArgumentChecks.isNotEmpty(number);
 		ArgumentChecks.isNotEmpty(type);
-		
+
 		this.number = number;
 		this.type = type;
 		this.validThru = validThru;
 	}
-	
+
+	public CreditCard(Client c, String number, String type, 
+			LocalDate validThru) {
+		this(number, type, validThru);
+		Associations.Pay.link(this, c);
+
+	}
+
 	public CreditCard(String number) {
 		this(number, "UNKNOWN", LocalDate.now().plusDays(1));
 	}
-	
-	CreditCard() {}
-	
-	
+
+	CreditCard() {
+	}
+
 	@Override
-	public void pay(double price)
-	{
+	public void pay(double price) {
 		if (!isValidNow())
 			throw new IllegalStateException("credit card is not valid");
 		super.pay(price);
 	}
-	
-	
+
 	@Override
-	public void validate(Charge charge)
-	{
+	public void validate(Charge charge) {
 		if (validThru.isBefore(charge.getInvoice().getDate()))
 			throw new IllegalStateException("credit card is invalid");
 	}
@@ -88,6 +93,6 @@ public class CreditCard extends PaymentMean {
 
 	public void setValidThru(LocalDate minusDays) {
 		validThru = minusDays;
-		
+
 	}
 }

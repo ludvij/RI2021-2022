@@ -60,7 +60,7 @@ public class CreditCardGatewayImpl implements CreditCardGateway {
 
 	@Override
 	public void update(CreditCardRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
@@ -87,7 +87,7 @@ public class CreditCardGatewayImpl implements CreditCardGateway {
 
 	@Override
 	public List<CreditCardRecord> findAll() {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 

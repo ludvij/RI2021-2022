@@ -63,7 +63,7 @@ public class InvoiceGatewayImpl implements InvoiceGateway {
 
 	@Override
 	public void update(InvoiceRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 

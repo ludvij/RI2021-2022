@@ -11,6 +11,7 @@ import uo.ri.cws.application.service.paymentmean.PaymentMeanCrudService.CardDto;
 import uo.ri.cws.application.service.paymentmean.PaymentMeanCrudService.CashDto;
 import uo.ri.cws.application.service.paymentmean.PaymentMeanCrudService.PaymentMeanDto;
 import uo.ri.cws.application.service.paymentmean.PaymentMeanCrudService.VoucherDto;
+import uo.ri.cws.application.service.paymentmean.VoucherService.VoucherSummaryDto;
 import uo.ri.cws.application.service.vehicle.VehicleCrudService.VehicleDto;
 import uo.ri.cws.application.service.vehicletype.VehicleTypeCrudService.VehicleTypeDto;
 import uo.ri.cws.application.service.workorder.WorkOrderCrudService.WorkOrderDto;
@@ -129,7 +130,8 @@ public class DtoAssembler {
 		return dto;
 	}
 
-	public static List<PaymentMeanDto> toPaymentMeanDtoList(List<PaymentMean> list) {
+	public static List<PaymentMeanDto> toPaymentMeanDtoList(
+			List<PaymentMean> list) {
 		return list.stream().map(mp -> toDto(mp)).collect(Collectors.toList());
 	}
 
@@ -191,8 +193,24 @@ public class DtoAssembler {
 		return dto;
 	}
 
-	public static List<VehicleTypeDto> toVehicleTypeDtoList(List<VehicleType> list) {
+	public static List<VehicleTypeDto> toVehicleTypeDtoList(
+			List<VehicleType> list) {
 		return list.stream().map(a -> toDto(a)).collect(Collectors.toList());
+	}
+
+	public static VoucherSummaryDto toDto(Client c, long issued, double balance,
+			double accumulated, double total) {
+		VoucherSummaryDto dto = new VoucherSummaryDto();
+		dto.dni     = c.getDni();
+		dto.name    = c.getName();
+		dto.surname = c.getSurname();
+		
+		dto.issued           = issued;
+		dto.consumed         = accumulated;
+		dto.totalAmount      = total;
+		dto.availableBalance = balance;
+		
+		return dto;
 	}
 
 }

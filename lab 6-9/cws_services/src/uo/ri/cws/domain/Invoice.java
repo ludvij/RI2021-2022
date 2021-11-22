@@ -193,7 +193,7 @@ public class Invoice extends BaseEntity {
 
 	public boolean canGenerate500Voucher() {
 		
-		return getChargesAmount() > 500 && !usedForVoucher;
+		return amount > 500 && !usedForVoucher && isSettled();
 	}
 
 	public void markAsUsed() {

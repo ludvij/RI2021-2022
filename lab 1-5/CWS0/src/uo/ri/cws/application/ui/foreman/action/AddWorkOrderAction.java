@@ -7,7 +7,7 @@ public class AddWorkOrderAction implements Action {
 
 	@Override
 	public void execute() throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 

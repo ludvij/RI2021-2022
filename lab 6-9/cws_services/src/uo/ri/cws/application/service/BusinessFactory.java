@@ -10,6 +10,8 @@ import uo.ri.cws.application.service.mechanic.MechanicCrudService;
 import uo.ri.cws.application.service.mechanic.crud.MechanicCrudServiceImpl;
 import uo.ri.cws.application.service.paymentmean.PaymentMeanCrudService;
 import uo.ri.cws.application.service.paymentmean.VoucherService;
+import uo.ri.cws.application.service.paymentmean.crud.PaymentMeanCrudServiceImpl;
+import uo.ri.cws.application.service.paymentmean.voucher.VoucherServiceImpl;
 import uo.ri.cws.application.service.sparepart.SparePartCrudService;
 import uo.ri.cws.application.service.vehicle.VehicleCrudService;
 import uo.ri.cws.application.service.vehicle.crud.VehicleCrudServiceImpl;
@@ -72,12 +74,12 @@ public class BusinessFactory implements ServiceFactory {
 
 	@Override
 	public PaymentMeanCrudService forPaymentMeanService() {
-		throw new RuntimeException("Not yet implemented");
+		return new PaymentMeanCrudServiceImpl();
 	}
 
 	@Override
 	public VoucherService forVoucherService() {
-		throw new RuntimeException("Not yet implemented");
+		return new VoucherServiceImpl();
 	}
 
 }

@@ -19,19 +19,19 @@ public class WorkOrderGatewayImpl implements WorkOrderGateway {
 	
 	@Override
 	public void add(WorkOrderRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 
 	@Override
 	public void update(WorkOrderRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 

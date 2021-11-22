@@ -6,6 +6,7 @@ import java.util.Optional;
 import uo.ri.cws.application.repository.ClientRepository;
 import uo.ri.cws.domain.Client;
 import uo.ri.cws.infrastructure.persistence.jpa.util.BaseJpaRepository;
+import uo.ri.cws.infrastructure.persistence.jpa.util.Jpa;
 
 public class ClientJpaRepository 
 		extends BaseJpaRepository<Client> 
@@ -13,12 +14,19 @@ public class ClientJpaRepository
 
 	@Override
 	public Optional<Client> findByDni(String dni) {
-		throw new RuntimeException("Not yet implemented");
+		return Jpa.getManager()
+				.createNamedQuery("Client.findByDni", Client.class)
+				.setParameter(1, dni)
+				.getResultStream()
+				.findFirst();
 	}
 
 	@Override
 	public List<Client> findSponsoredByClient(String id) {
-		throw new RuntimeException("Not yet implemented");
+		return Jpa.getManager()
+				.createNamedQuery("Client.findSponsoredByClient", Client.class)
+				.setParameter(1, id)
+				.getResultList();
 	}
 
 	@Override

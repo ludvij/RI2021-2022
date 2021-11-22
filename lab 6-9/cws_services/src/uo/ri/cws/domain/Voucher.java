@@ -45,6 +45,11 @@ public class Voucher extends PaymentMean {
 		this(code, "no-description", 0);
 	}
 
+	public Voucher(Client c, String code, String description, double balance) {
+		this(code, description, balance);
+		Associations.Pay.link(this, c);
+	}
+
 	@Override
 	public void validate(Charge charge)
 	{

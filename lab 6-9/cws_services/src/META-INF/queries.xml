@@ -4,6 +4,20 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd" version="2.2">
         
+        
+    <!-- Client queries  -->
+    <named-query name="Client.findSponsoredByClient">
+    	<query>select c from Client c where c.recommendedBy.sponsor.id = ?1</query>
+    </named-query>
+    
+    <named-query name="Client.findByDni">
+		<query>
+			select c 
+			from Client c
+			where c.dni = ?1
+		</query>
+	</named-query>
+        
 	<!-- Vehicle queries --> 
 	<named-query name="Vehicle.findByPlate">
 		<query>select v from Vehicle v where v.plateNumber = ?1</query>
@@ -28,6 +42,35 @@
 				join c.paymentMeans m 
 			where f.id = ?1
 		</query>
+	</named-query>
+	
+	<named-query name="PaymentMean.findPaymentMeansByClientId">
+		<query>select m from PaymentMean m where m.client.id = ?1</query>
+	</named-query>
+	
+	<!--  Voucher Queries -->
+	<named-query name="Voucher.findByClientId">
+		<query>select v from Voucher v where v.client.id = ?1</query>
+	</named-query>
+	
+	<named-query name="Voucher.findAggregateVoucherDataByClientId">
+		<query> select 
+					count(v), 
+					coalesce(sum(v.available), 0),
+					coalesce(sum(v.accumulated), 0),
+					coalesce(sum(v.accumulated + v.available), 0)
+				from Voucher v 
+					where v.client.id = ?1 
+		</query>
+	</named-query>
+	
+	<named-query name="Voucher.findVoucherByCode">
+		<query>select v from Voucher v where v.code = ?1</query>
+	</named-query>
+	
+	<!--  CreditCard queries  -->
+	<named-query name="CreditCard.findCreditCardByNumber">
+		<query>select c from CreditCard c where c.number = ?1</query>
 	</named-query>
 	
 	<!-- Invoice queries -->

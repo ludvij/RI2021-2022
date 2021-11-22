@@ -18,14 +18,12 @@ public class VoucherServiceImpl implements VoucherService {
 
 	@Override
 	public int generateVouchers() throws BusinessException {
-		// TODO Auto-generated method stub
 		return ce.execute(new GenerateVouchers());
 	}
 
 	@Override
 	public Optional<VoucherDto> findVouchersById(String id) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override

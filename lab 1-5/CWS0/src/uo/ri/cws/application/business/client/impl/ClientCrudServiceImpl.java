@@ -11,37 +11,37 @@ public class ClientCrudServiceImpl implements ClientCrudService {
 
 	@Override
 	public ClientDto addClient(ClientDto client, String recommenderId) throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 
 	@Override
 	public void deleteClient(String idClient) throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public void updateClient(ClientDto client) throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public List<ClientDto> findAllClients() throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 
 	@Override
 	public Optional<ClientDto> findClientById(String idClient) throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 
 	@Override
 	public List<ClientDto> findClientsRecommendedBy(String sponsorID) throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 

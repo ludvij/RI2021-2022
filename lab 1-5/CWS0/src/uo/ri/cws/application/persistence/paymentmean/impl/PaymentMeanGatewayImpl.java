@@ -60,7 +60,7 @@ public class PaymentMeanGatewayImpl implements PaymentMeanGateway {
 
 	@Override
 	public void update(PaymentmeanRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
@@ -88,7 +88,7 @@ public class PaymentMeanGatewayImpl implements PaymentMeanGateway {
 
 	@Override
 	public List<PaymentmeanRecord> findAll() {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 

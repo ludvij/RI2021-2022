@@ -40,13 +40,13 @@ public class VoucherGatewayImpl implements VoucherGateway {
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 
 	@Override
 	public void update(VoucherRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 
@@ -73,7 +73,7 @@ public class VoucherGatewayImpl implements VoucherGateway {
 
 	@Override
 	public List<VoucherRecord> findAll() {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 

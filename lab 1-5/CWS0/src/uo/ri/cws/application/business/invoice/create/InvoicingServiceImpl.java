@@ -30,8 +30,7 @@ public class InvoicingServiceImpl implements InvoicingService {
 
 	@Override
 	public List<InvoicingWorkOrderDto> findWorkOrdersByClientDni(String dni) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override
@@ -41,25 +40,22 @@ public class InvoicingServiceImpl implements InvoicingService {
 
 	@Override
 	public List<InvoicingWorkOrderDto> findWorkOrdersByPlateNumber(String plate) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override
 	public Optional<InvoiceDto> findInvoiceByNumber(Long number) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override
 	public List<PaymentMeanForInvoicingDto> findPayMeansByClientDni(String dni) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Not yet implemented");
 	}
 
 	@Override
 	public void settleInvoice(String invoiceId, List<ChargeDto> charges) throws BusinessException {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		
 	}
 

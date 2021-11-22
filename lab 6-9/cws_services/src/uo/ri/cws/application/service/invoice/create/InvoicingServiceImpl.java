@@ -8,6 +8,7 @@ import uo.ri.conf.Factory;
 import uo.ri.cws.application.service.BusinessException;
 import uo.ri.cws.application.service.invoice.InvoicingService;
 import uo.ri.cws.application.service.invoice.create.command.CreateInvoiceFor;
+import uo.ri.cws.application.service.invoice.create.command.FindNotInvoicedWorkOrdersByClient;
 import uo.ri.cws.application.util.command.CommandExecutor;
 
 public class InvoicingServiceImpl implements InvoicingService {
@@ -39,7 +40,7 @@ public class InvoicingServiceImpl implements InvoicingService {
 	@Override
 	public List<InvoicingWorkOrderDto> findNotInvoicedWorkOrdersByClientDni(
 			String dni) throws BusinessException {
-		throw new RuntimeException("Not yet implemented");
+		return executor.execute(new FindNotInvoicedWorkOrdersByClient(dni));
 	}
 
 	@Override

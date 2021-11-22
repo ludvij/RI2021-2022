@@ -19,13 +19,13 @@ public class RecommendationGatewayImpl implements RecommendationGateway {
 
 	@Override
 	public void add(RecommendationRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
@@ -49,13 +49,13 @@ public class RecommendationGatewayImpl implements RecommendationGateway {
 
 	@Override
 	public Optional<RecommendationRecord> findById(String id) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 
 	@Override
 	public List<RecommendationRecord> findAll() {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 

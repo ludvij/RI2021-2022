@@ -19,31 +19,31 @@ public class VehicleGatewayImpl implements VehicleGateway {
 
 	@Override
 	public void add(VehicleRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public void update(VehicleRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public Optional<VehicleRecord> findById(String id) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 
 	@Override
 	public List<VehicleRecord> findAll() {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 

@@ -19,19 +19,19 @@ public class ClientGatewayImpl implements ClientGateway {
 
 	@Override
 	public void add(ClientRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public void remove(String id) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
 	@Override
 	public void update(ClientRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 

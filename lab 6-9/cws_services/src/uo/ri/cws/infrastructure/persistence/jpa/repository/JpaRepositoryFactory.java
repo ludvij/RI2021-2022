@@ -62,7 +62,7 @@ public class JpaRepositoryFactory implements RepositoryFactory {
 
 	@Override
 	public RecommendationRepository forRecomendacion() {
-		throw new RuntimeException("Not yet implemented");
+		return new RecommendationJpaRepository();
 	}
 
 	@Override

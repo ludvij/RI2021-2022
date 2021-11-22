@@ -19,7 +19,7 @@ public class CashGatewayImpl implements CashGateway {
 
 	@Override
 	public void add(CashRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
@@ -30,7 +30,7 @@ public class CashGatewayImpl implements CashGateway {
 
 	@Override
 	public void update(CashRecord t) {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 
 	}
 
@@ -57,7 +57,7 @@ public class CashGatewayImpl implements CashGateway {
 
 	@Override
 	public List<CashRecord> findAll() {
-		// TODO Auto-generated method stub
+		throw new RuntimeException("Not yet implemented");
 		return null;
 	}
 }

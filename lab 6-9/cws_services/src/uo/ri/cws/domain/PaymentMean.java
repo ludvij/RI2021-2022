@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
 
 public abstract class PaymentMean extends BaseEntity {
@@ -14,9 +15,16 @@ public abstract class PaymentMean extends BaseEntity {
 
 	private Client client;
 	private Set<Charge> charges = new HashSet<>();
+	
+	private String dtype;
 
 	public PaymentMean() {}
 
+	
+	public PaymentMean(String dtype) {
+		ArgumentChecks.isNotNull(dtype);
+		ArgumentChecks.isNotEmpty(dtype);
+	}
 	
 	public void validate(Charge charge) {
 		
@@ -63,6 +71,11 @@ public abstract class PaymentMean extends BaseEntity {
 			return false;
 		PaymentMean other = (PaymentMean) obj;
 		return Objects.equals(client, other.client);
+	}
+
+
+	public String getDtype() {
+		return dtype;
 	}
 	
 	
