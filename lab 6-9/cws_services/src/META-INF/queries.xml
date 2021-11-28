@@ -7,7 +7,7 @@
         
     <!-- Client queries  -->
     <named-query name="Client.findSponsoredByClient">
-    	<query>select c from Client c where c.recommendedBy.sponsor.id = ?1</query>
+    	<query>select c from Client c where c.recommended.sponsor.id = ?1</query>
     </named-query>
     
     <named-query name="Client.findByDni">

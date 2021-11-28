@@ -16,6 +16,7 @@ public class SparePart extends BaseEntity{
 	// accidental attributes
 	private Set<Substitution> substitutions = new HashSet<>();
 	
+	
 	SparePart() {}
 	
 	public SparePart(String code) {
@@ -48,7 +49,7 @@ public class SparePart extends BaseEntity{
 	
 
 
-	public Set<Substitution> getSustitutions() {
+	public Set<Substitution> getSubstitutions() {
 		return new HashSet<>( substitutions );
 	}
 

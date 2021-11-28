@@ -52,7 +52,7 @@ public class SustituteTests {
 		assertTrue( sustitution.getIntervention().equals( intervention ));
 		assertTrue( sustitution.getSparePart().equals( sparePart ));
 		
-		assertTrue( sparePart.getSustitutions().contains( sustitution ));
+		assertTrue( sparePart.getSubstitutions().contains( sustitution ));
 		assertTrue( intervention.getSubstitutions().contains( sustitution ));
 	}
 
@@ -63,8 +63,8 @@ public class SustituteTests {
 		assertTrue( sustitution.getIntervention() == null);
 		assertTrue( sustitution.getSparePart() == null);
 		
-		assertTrue( ! sparePart.getSustitutions().contains( sustitution ));
-		assertTrue( sparePart.getSustitutions().size() == 0 );
+		assertTrue( ! sparePart.getSubstitutions().contains( sustitution ));
+		assertTrue( sparePart.getSubstitutions().size() == 0 );
 
 		assertTrue( ! intervention.getSubstitutions().contains( sustitution ));
 		assertTrue( intervention.getSubstitutions().size() == 0 );
@@ -83,12 +83,12 @@ public class SustituteTests {
 
 	@Test
 	public void testSafeReturnOnSparePart() {
-		Set<Substitution> sustituciones = sparePart.getSustitutions();
+		Set<Substitution> sustituciones = sparePart.getSubstitutions();
 		sustituciones.remove( sustitution );
 
 		assertTrue( sustituciones.size() == 0 );
 		assertTrue( "It must be a copy of the collection or a read-only version", 
-			sparePart.getSustitutions().size() == 1
+			sparePart.getSubstitutions().size() == 1
 		);
 	}
 

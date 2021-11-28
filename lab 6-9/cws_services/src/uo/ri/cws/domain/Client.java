@@ -26,7 +26,7 @@ public class Client extends BaseEntity {
 	// clients whom I sponsored
 	private Set<Recommendation> sponsored = new HashSet<>();
 	// client who sponsored me
-	private Recommendation recommendedBy;
+	private Recommendation recommended;
 
 	Client() {
 	}
@@ -94,11 +94,11 @@ public class Client extends BaseEntity {
 	}
 
 	void _setRecommended(Recommendation recommended) {
-		this.recommendedBy = recommended;
+		this.recommended = recommended;
 	}
 
 	public Recommendation getRecommended() {
-		return recommendedBy;
+		return recommended;
 	}
 
 	public List<WorkOrder> getWorkOrdersAvailableForVoucher() {

@@ -78,8 +78,8 @@ public class SubstituteMappingTests {
 
 		SparePart restored = unitOfWork.findById( SparePart.class, sparePart.getId() );
 
-		assertTrue( restored.getSustitutions().contains( substitution ) );
-		assertEquals( 1, restored.getSustitutions().size() );
+		assertTrue( restored.getSubstitutions().contains( substitution ) );
+		assertEquals( 1, restored.getSubstitutions().size() );
 	}
 
 	/**

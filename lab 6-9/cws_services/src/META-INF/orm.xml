@@ -28,7 +28,7 @@
     		<one-to-many name="paymentMeans" mapped-by="client"     />
     		<one-to-many name="vehicles"     mapped-by="client"     />
     		<one-to-many name="sponsored"    mapped-by="sponsor"    />		
-    		<one-to-one name="recommendedBy" mapped-by="recommended"/>
+    		<one-to-one  name="recommended"  mapped-by="recommended"/>
     	</attributes>
     </entity>
     

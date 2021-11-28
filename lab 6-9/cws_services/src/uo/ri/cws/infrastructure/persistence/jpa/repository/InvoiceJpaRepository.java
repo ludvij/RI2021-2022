@@ -1,6 +1,5 @@
 package uo.ri.cws.infrastructure.persistence.jpa.repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +20,7 @@ public class InvoiceJpaRepository
 	@Override
 	public Long getNextInvoiceNumber() {
 		return Jpa.getManager()
-		.createNamedQuery("Invoice.getNextInvoiceNumber", BigDecimal.class)
+		.createNamedQuery("Invoice.getNextInvoiceNumber", Long.class)
 		.getSingleResult()
 		.longValue();
 	}
