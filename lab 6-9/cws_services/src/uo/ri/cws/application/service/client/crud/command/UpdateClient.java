@@ -32,6 +32,9 @@ public class UpdateClient implements Command<Void> {
 		
 		Client c = oc.get();
 		Address a = new Address(dto.addressStreet, dto.addressCity, dto.addressZipcode);
+		
+		BusinessChecks.hasVersion(c, dto.version);
+		
 		c.setName(dto.name);
 		c.setSurname(dto.surname);
 		c.setPhone(dto.phone);
