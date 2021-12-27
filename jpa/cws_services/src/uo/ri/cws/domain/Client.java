@@ -42,6 +42,7 @@ public class Client extends BaseEntity {
 		this.dni = dni;
 		this.name = name;
 		this.surname = surname;
+		address = new Address();
 
 	}
 

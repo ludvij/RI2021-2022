@@ -115,7 +115,7 @@ public class Invoice extends BaseEntity {
 	
 		double chargesAmount = getChargesAmount();
 		
-		double diff = chargesAmount - amount * vat;
+		double diff = chargesAmount - amount;// * vat;
 		if (diff >= 0.01)
 			throw new IllegalStateException("Not enough money");
 		else if (diff <= -0.01)

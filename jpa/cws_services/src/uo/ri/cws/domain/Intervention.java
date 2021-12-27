@@ -5,6 +5,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import alb.util.assertion.ArgumentChecks;
 import uo.ri.cws.domain.base.BaseEntity;
@@ -76,7 +77,7 @@ public class Intervention extends BaseEntity {
 		double price = minutes / 60.0d
 				* workOrder.getVehicle().getVehicleType().getPricePerHour();
 		double subs = substitutions.stream().map(x -> x.getAmount())
-				.reduce(0.0d, (a, b) -> a + b);
+				.collect(Collectors.summingDouble(x -> x));
 
 		return price + subs;
 	}
